@@ -19,7 +19,7 @@ public class Review extends BaseTimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "actionpan_id")
+    @JoinColumn(name = "actionplan_id")
     private ActionPlan actionPlan;
 
     @Builder
