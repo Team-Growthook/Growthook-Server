@@ -36,6 +36,12 @@ public class Member extends BaseTimeEntity {
     @Column(name = "gathered_ssuk")
     private Integer gatheredSsuk;
 
+    @Column(nullable = false, name = "social_id")
+    private String socialId;
+
+    @Column(name = "refrech_token")
+    private String refreshToken;
+
     @Builder
     public Member(Long id, String nickname, String email, SocialPlatform socialPlatform, Boolean isNewMember, Integer usedSsuk, Integer gatheredSsuk) {
         this.id = id;
