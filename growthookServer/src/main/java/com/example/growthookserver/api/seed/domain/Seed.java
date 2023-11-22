@@ -40,8 +40,7 @@ public class Seed extends BaseTimeEntity {
     private Cave cave;
 
     @Builder
-    public Seed(Long id, String insight, String memo, String source, String url, LocalDate lockDate, Boolean isScraped, Boolean isLocked, Cave cave) {
-        this.id = id;
+    public Seed(String insight, String memo, String source, String url, LocalDate lockDate, Boolean isScraped, Boolean isLocked, Cave cave) {
         this.insight = insight;
         this.memo = memo;
         this.source = source;

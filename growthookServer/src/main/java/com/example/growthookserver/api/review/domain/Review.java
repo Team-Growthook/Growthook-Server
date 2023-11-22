@@ -23,8 +23,7 @@ public class Review extends BaseTimeEntity {
     private ActionPlan actionPlan;
 
     @Builder
-    public Review(Long id, String content, ActionPlan actionPlan) {
-        this.id = id;
+    public Review(String content, ActionPlan actionPlan) {
         this.content = content;
         this.actionPlan = actionPlan;
     }

@@ -29,8 +29,7 @@ public class ActionPlan extends BaseTimeEntity {
     private Seed seed;
 
     @Builder
-    public ActionPlan(Long id, String content, Boolean isScraped, Boolean isFinished, Seed seed) {
-        this.id = id;
+    public ActionPlan(String content, Boolean isScraped, Boolean isFinished, Seed seed) {
         this.content = content;
         this.isScraped = isScraped;
         this.isFinished = isFinished;

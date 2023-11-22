@@ -24,7 +24,7 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "spcial_platform")
+    @Column(name = "social_platform")
     private SocialPlatform socialPlatform;
 
     @Column(name = "is_new_member")
@@ -39,12 +39,11 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, name = "social_id")
     private String socialId;
 
-    @Column(name = "refrech_token")
+    @Column(name = "refresh_token")
     private String refreshToken;
 
     @Builder
-    public Member(Long id, String nickname, String email, SocialPlatform socialPlatform, Boolean isNewMember, Integer usedSsuk, Integer gatheredSsuk) {
-        this.id = id;
+    public Member(String nickname, String email, SocialPlatform socialPlatform, Boolean isNewMember, Integer usedSsuk, Integer gatheredSsuk) {
         this.nickname = nickname;
         this.email = email;
         this.socialPlatform = socialPlatform;
