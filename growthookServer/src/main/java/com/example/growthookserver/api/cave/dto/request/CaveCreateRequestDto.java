@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.cave.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,6 @@ public class CaveCreateRequestDto {
     private String name;
     @NotBlank
     private String introduction;
-    @NotBlank
+    @NotNull
     private Boolean isShared;
 }
