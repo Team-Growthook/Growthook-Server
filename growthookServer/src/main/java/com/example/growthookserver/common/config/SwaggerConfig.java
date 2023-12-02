@@ -16,12 +16,10 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public GroupedOpenApi chatOpenApi() {
-        String[] paths = {"/api/v1/**"};
-
+    public GroupedOpenApi Version1OpenApi() {
         return GroupedOpenApi.builder()
                 .group("Growthook API v1")
-                .pathsToMatch(paths)
+                .pathsToMatch("/api/v1/**")
                 .build();
     }
 }
