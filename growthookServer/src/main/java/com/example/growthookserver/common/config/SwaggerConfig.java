@@ -24,14 +24,4 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
-
-    @Bean
-    public GroupedOpenApi healthCheckOpenApi(){
-        String[] healthCheckPaths = {"/health"};
-
-        return GroupedOpenApi.builder()
-                .group("Health Check API")
-                .pathsToMatch(healthCheckPaths)
-                .build();
-    }
 }
