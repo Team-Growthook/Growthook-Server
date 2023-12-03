@@ -29,6 +29,7 @@ public enum ErrorStatus {
      * 404 NOT_FOUND
      */
     NOT_FOUND_MEMBER("해당하는 유저가 없습니다."),
+    NOT_FOUND_MEMBER_CAVE("유저가 생성한 동굴이 없습니다."),
 
     /**
      * 500 SERVER_ERROR
