@@ -8,30 +8,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
-        info = @Info(title = "Grothook API 명세서",
-                description = "Grothook API 명세서",
+        info = @Info(title = "Growthook API 명세서",
+                description = "Growthook API 명세서",
                 version = "v1"))
 @RequiredArgsConstructor
 @Configuration
 public class SwaggerConfig {
 
     @Bean
-    public GroupedOpenApi chatOpenApi() {
-        String[] paths = {"/api/v1/**"};
-
+    public GroupedOpenApi Version1OpenApi() {
         return GroupedOpenApi.builder()
-                .group("Grothook API v1")
-                .pathsToMatch(paths)
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi healthCheckOpenApi(){
-        String[] healthCheckPaths = {"/health"};
-
-        return GroupedOpenApi.builder()
-                .group("Health Check API")
-                .pathsToMatch(healthCheckPaths)
+                .group("Growthook API v1")
+                .pathsToMatch("/api/v1/**")
                 .build();
     }
 }
