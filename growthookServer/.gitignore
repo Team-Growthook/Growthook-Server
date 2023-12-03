@@ -37,3 +37,5 @@ out/
 .vscode/
 
 resources
+../.DS_Store
+.DS_Store
