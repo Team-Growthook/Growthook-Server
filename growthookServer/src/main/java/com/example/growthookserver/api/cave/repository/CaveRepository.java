@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CaveRepository extends JpaRepository<Cave, Long> {
     List<Cave> findAllByMemberId(Long memberId);
+
+    Cave findCaveById(Long caveId);
 }

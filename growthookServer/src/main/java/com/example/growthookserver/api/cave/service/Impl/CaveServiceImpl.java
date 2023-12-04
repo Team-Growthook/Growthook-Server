@@ -2,8 +2,10 @@ package com.example.growthookserver.api.cave.service.Impl;
 
 import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
+import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
+import com.example.growthookserver.api.cave.dto.response.CaveUpdateResponseDto;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
 import com.example.growthookserver.api.cave.service.CaveService;
 import com.example.growthookserver.api.member.domain.Member;
@@ -49,6 +51,13 @@ public class CaveServiceImpl implements CaveService {
         return caves.stream()
                 .map(cave -> CaveAllResponseDto.of(cave.getId(), cave.getName()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateCave(Long caveId, CaveUpdateRequestDto caveUpdateRequestDto){
+        Cave existingCave = caveRepository.findCaveById(caveId);
+        existingCave.updateCave(caveUpdateRequestDto.getName(), caveUpdateRequestDto.getIntroduction(), caveUpdateRequestDto.getIsShared());
     }
 
     private Member findMemberById(Long memberId){

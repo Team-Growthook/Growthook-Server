@@ -20,7 +20,8 @@ public enum SuccessStatus {
      * cave
      */
     POST_CAVE_SUCCESS(HttpStatus.CREATED,"동굴 생성 성공"),
-    GET_CAVE_ALL(HttpStatus.OK,"동굴 목록 조회 성공")
+    GET_CAVE_ALL(HttpStatus.OK,"동굴 목록 조회 성공"),
+    PATCH_CAVE_SUCCESS(HttpStatus.OK,"동굴 수정 성공")
     ;
 
     private final HttpStatus httpStatus;

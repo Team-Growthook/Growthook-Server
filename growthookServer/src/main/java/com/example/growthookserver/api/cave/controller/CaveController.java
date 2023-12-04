@@ -1,8 +1,10 @@
 package com.example.growthookserver.api.cave.controller;
 
 import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
+import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
+import com.example.growthookserver.api.cave.dto.response.CaveUpdateResponseDto;
 import com.example.growthookserver.api.cave.service.CaveService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -32,4 +34,12 @@ public class CaveController {
     public ApiResponse<CaveAllResponseDto> getCaveAll(@PathVariable Long memberId) {
         return ApiResponse.success(SuccessStatus.GET_CAVE_ALL, caveService.getCaveAll(memberId));
     }
+
+    @PatchMapping("cave/{caveId}/patch")
+    @Operation(summary = "CavePatch", description = "동굴 내용을 수정하는 API입니다.")
+    public ApiResponse updateCave(@PathVariable Long caveId, @Valid @RequestBody CaveUpdateRequestDto caveUpdateRequestDto) {
+        caveService.updateCave(caveId, caveUpdateRequestDto);
+        return ApiResponse.success(SuccessStatus.PATCH_CAVE_SUCCESS.getStatusCode(), SuccessStatus.PATCH_CAVE_SUCCESS.getMessage());
+    }
 }
+
