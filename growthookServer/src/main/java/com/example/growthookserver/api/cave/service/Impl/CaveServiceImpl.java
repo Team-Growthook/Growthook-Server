@@ -5,7 +5,6 @@ import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
 import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
-import com.example.growthookserver.api.cave.dto.response.CaveUpdateResponseDto;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
 import com.example.growthookserver.api.cave.service.CaveService;
 import com.example.growthookserver.api.member.domain.Member;

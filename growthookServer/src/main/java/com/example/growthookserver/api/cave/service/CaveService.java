@@ -4,7 +4,6 @@ import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
 import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
-import com.example.growthookserver.api.cave.dto.response.CaveUpdateResponseDto;
 
 import java.util.List;
 

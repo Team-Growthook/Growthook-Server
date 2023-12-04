@@ -4,7 +4,6 @@ import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
 import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
-import com.example.growthookserver.api.cave.dto.response.CaveUpdateResponseDto;
 import com.example.growthookserver.api.cave.service.CaveService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -13,8 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
