@@ -5,6 +5,7 @@ import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
 import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
+import com.example.growthookserver.api.cave.dto.response.CaveDetailGetResponseDto;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
 import com.example.growthookserver.api.cave.service.CaveService;
 import com.example.growthookserver.api.member.domain.Member;
@@ -57,6 +58,15 @@ public class CaveServiceImpl implements CaveService {
     public void updateCave(Long caveId, CaveUpdateRequestDto caveUpdateRequestDto){
         Cave existingCave = caveRepository.findCaveById(caveId);
         existingCave.updateCave(caveUpdateRequestDto.getName(), caveUpdateRequestDto.getIntroduction(), caveUpdateRequestDto.getIsShared());
+    }
+
+    @Override
+    @Transactional
+    public CaveDetailGetResponseDto getCaveDetail(Long memberId, Long caveId){
+        Member member = findMemberById(memberId);
+        Cave cave = caveRepository.findCaveById(caveId);
+
+        return CaveDetailGetResponseDto.of(cave.getName(), cave.getIntroduction(), member.getNickname(), cave.getIsShared());
     }
 
     private Member findMemberById(Long memberId){

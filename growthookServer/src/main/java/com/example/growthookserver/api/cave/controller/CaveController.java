@@ -4,6 +4,7 @@ import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
 import com.example.growthookserver.api.cave.dto.request.CaveUpdateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveAllResponseDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
+import com.example.growthookserver.api.cave.dto.response.CaveDetailGetResponseDto;
 import com.example.growthookserver.api.cave.service.CaveService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -37,6 +38,12 @@ public class CaveController {
     public ApiResponse updateCave(@PathVariable Long caveId, @Valid @RequestBody CaveUpdateRequestDto caveUpdateRequestDto) {
         caveService.updateCave(caveId, caveUpdateRequestDto);
         return ApiResponse.success(SuccessStatus.PATCH_CAVE_SUCCESS.getStatusCode(), SuccessStatus.PATCH_CAVE_SUCCESS.getMessage());
+    }
+
+    @GetMapping("member/{memberId}/cave/{caveId}/detail")
+    @Operation(summary = "CaveDetailGet", description = "도굴의 상세 내용을 조회하는 API입니다.")
+    public ApiResponse<CaveDetailGetResponseDto> getCaveDetail(@PathVariable Long memberId, @PathVariable Long caveId) {
+        return ApiResponse.success(SuccessStatus.GET_CAVE_DETAIL, caveService.getCaveDetail(memberId, caveId));
     }
 }
 
