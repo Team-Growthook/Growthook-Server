@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CaveServiceImpl implements CaveService {
     private final MemberRepository memberRepository;
     private final CaveRepository caveRepository;
@@ -56,7 +57,7 @@ public class CaveServiceImpl implements CaveService {
     @Override
     @Transactional
     public void updateCave(Long caveId, CaveUpdateRequestDto caveUpdateRequestDto){
-        Cave existingCave = caveRepository.findCaveById(caveId);
+        Cave existingCave = findCaveById(caveId);
         existingCave.updateCave(caveUpdateRequestDto.getName(), caveUpdateRequestDto.getIntroduction(), caveUpdateRequestDto.getIsShared());
     }
 
@@ -64,7 +65,7 @@ public class CaveServiceImpl implements CaveService {
     @Transactional
     public CaveDetailGetResponseDto getCaveDetail(Long memberId, Long caveId){
         Member member = findMemberById(memberId);
-        Cave cave = caveRepository.findCaveById(caveId);
+        Cave cave = findCaveById(caveId);
 
         return CaveDetailGetResponseDto.of(cave.getName(), cave.getIntroduction(), member.getNickname(), cave.getIsShared());
     }
@@ -72,5 +73,10 @@ public class CaveServiceImpl implements CaveService {
     private Member findMemberById(Long memberId){
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
+    }
+
+    private Cave findCaveById(Long caveId) {
+        return caveRepository.findCaveById(caveId)
+                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_CAVE.getMessage()));
     }
 }

@@ -4,9 +4,10 @@ import com.example.growthookserver.api.cave.domain.Cave;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CaveRepository extends JpaRepository<Cave, Long> {
     List<Cave> findAllByMemberId(Long memberId);
 
-    Cave findCaveById(Long caveId);
+    Optional<Cave> findCaveById(Long caveId);
 }

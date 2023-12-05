@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class CaveAllResponseDto {
     private Long caveId;
     private String caveName;
-
-    public static CaveAllResponseDto of(Long caveId, String caveName){
-        return new CaveAllResponseDto(caveId, caveName);
-    }
 }
