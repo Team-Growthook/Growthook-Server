@@ -28,13 +28,19 @@ public class SecurityConfig {
     @Bean
     @Profile("dev")
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        XorCsrfTokenRequestAttributeHandler requestHandler = new XorCsrfTokenRequestAttributeHandler();
+        // XorCsrfTokenRequestAttributeHandler requestHandler = new XorCsrfTokenRequestAttributeHandler();
+//        http
+//                .csrf((csrf) -> csrf
+//                        .csrfTokenRequestHandler(requestHandler)
+//                )
+//                .authorizeRequests()
+//                .anyRequest().permitAll();
         http
-                .csrf((csrf) -> csrf
-                        .csrfTokenRequestHandler(requestHandler)
-                )
-                .authorizeRequests()
+                .csrf().disable()
+                .httpBasic().disable()
+                .authorizeHttpRequests()
                 .anyRequest().permitAll();
+
         return http.build();
     }
 }

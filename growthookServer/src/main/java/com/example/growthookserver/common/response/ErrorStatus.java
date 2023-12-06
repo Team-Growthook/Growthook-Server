@@ -28,7 +28,7 @@ public enum ErrorStatus {
     /**
      * 404 NOT_FOUND
      */
-
+    NOT_FOUND_MEMBER("해당하는 유저가 없습니다."),
 
     /**
      * 500 SERVER_ERROR
