@@ -28,11 +28,16 @@ public class Cave extends BaseTimeEntity {
     private Member member;
 
     @Builder
-    public Cave(Long id, String name, String introduction, Boolean isShared, Member member) {
-        this.id = id;
+    public Cave(String name, String introduction, Boolean isShared, Member member) {
         this.name = name;
         this.introduction = introduction;
         this.isShared = isShared;
         this.member = member;
+    }
+
+    public void updateCave(String newName, String newIntroduction, Boolean newIsShared) {
+        this.name = newName;
+        this.introduction = newIntroduction;
+        this.isShared = newIsShared;
     }
 }
