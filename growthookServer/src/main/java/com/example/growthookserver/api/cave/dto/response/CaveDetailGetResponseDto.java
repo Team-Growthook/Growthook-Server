@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(staticName = "of")
-public class CaveAllResponseDto {
-    private Long caveId;
+public class CaveDetailGetResponseDto {
     private String caveName;
+    private String introduction;
+    private String nickname;
+    private Boolean isShared;
 }
