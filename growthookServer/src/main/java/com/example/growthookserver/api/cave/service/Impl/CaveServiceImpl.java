@@ -41,7 +41,6 @@ public class CaveServiceImpl implements CaveService {
     }
 
     @Override
-    @Transactional
     public List<CaveAllResponseDto> getCaveAll(Long memberId){
         List<Cave> caves = caveRepository.findAllByMemberId(memberId);
 
@@ -58,7 +57,6 @@ public class CaveServiceImpl implements CaveService {
     }
 
     @Override
-    @Transactional
     public CaveDetailGetResponseDto getCaveDetail(Long memberId, Long caveId){
         Member member = findMemberById(memberId);
         Cave cave = findCaveById(caveId);

@@ -23,7 +23,7 @@ public enum SuccessStatus {
     GET_CAVE_ALL(HttpStatus.OK,"동굴 목록 조회 성공"),
     PATCH_CAVE_SUCCESS(HttpStatus.OK,"동굴 수정 성공"),
     GET_CAVE_DETAIL(HttpStatus.OK,"동굴 상세 정보 조회 성공"),
-    DELETE_CAVE(HttpStatus.OK,"동글 식제 완료")
+    DELETE_CAVE(HttpStatus.OK,"동글 삭제 완료")
     ;
 
     private final HttpStatus httpStatus;
