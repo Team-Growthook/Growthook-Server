@@ -37,7 +37,7 @@ public class CaveController {
         return ApiResponse.success(SuccessStatus.GET_CAVE_ALL, caveService.getCaveAll(memberId));
     }
 
-    @PatchMapping("cave/{caveId}/patch")
+    @PatchMapping("cave/{caveId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "CavePatch", description = "동굴 내용을 수정하는 API입니다.")
     public ApiResponse updateCave(@PathVariable Long caveId, @Valid @RequestBody CaveUpdateRequestDto caveUpdateRequestDto) {
@@ -47,9 +47,17 @@ public class CaveController {
 
     @GetMapping("member/{memberId}/cave/{caveId}/detail")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "CaveDetailGet", description = "도굴의 상세 내용을 조회하는 API입니다.")
+    @Operation(summary = "CaveDetailGet", description = "동굴의 상세 내용을 조회하는 API입니다.")
     public ApiResponse<CaveDetailGetResponseDto> getCaveDetail(@PathVariable Long memberId, @PathVariable Long caveId) {
         return ApiResponse.success(SuccessStatus.GET_CAVE_DETAIL, caveService.getCaveDetail(memberId, caveId));
+    }
+
+    @DeleteMapping("cave/{caveId}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "CaveDelete", description = "동굴을 삭제하는 API입니다.")
+    public ApiResponse deleteCave(@PathVariable Long caveId) {
+        caveService.deleteCave(caveId);
+        return ApiResponse.success(SuccessStatus.DELETE_CAVE.getStatusCode(),SuccessStatus.DELETE_CAVE.getMessage());
     }
 }
 

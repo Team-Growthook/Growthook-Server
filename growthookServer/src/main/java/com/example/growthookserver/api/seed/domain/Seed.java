@@ -1,5 +1,6 @@
 package com.example.growthookserver.api.seed.domain;
 
+import com.example.growthookserver.api.actionplan.domain.ActionPlan;
 import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -9,6 +10,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.CascadeType.ALL;
 
 @Entity
 @Getter
@@ -38,6 +43,9 @@ public class Seed extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cave_id")
     private Cave cave;
+
+    @OneToMany(mappedBy = "seed",cascade = ALL)
+    private List<ActionPlan> actionPlans = new ArrayList<>();
 
     @Builder
     public Seed(String insight, String memo, String source, String url, LocalDate lockDate, Boolean isScraped, Boolean isLocked, Cave cave) {
