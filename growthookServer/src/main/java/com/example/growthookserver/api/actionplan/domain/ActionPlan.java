@@ -1,5 +1,6 @@
 package com.example.growthookserver.api.actionplan.domain;
 
+import com.example.growthookserver.api.review.domain.Review;
 import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -7,6 +8,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.CascadeType.ALL;
 
 @Entity
 @Getter
@@ -27,6 +33,9 @@ public class ActionPlan extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seed_id")
     private Seed seed;
+
+    @OneToMany(mappedBy = "actionPlan",cascade = ALL)
+    private List<Review> reviews = new ArrayList<>();
 
     @Builder
     public ActionPlan(String content, Boolean isScraped, Boolean isFinished, Seed seed) {

@@ -66,6 +66,13 @@ public class CaveServiceImpl implements CaveService {
         return CaveDetailGetResponseDto.of(cave.getName(), cave.getIntroduction(), member.getNickname(), cave.getIsShared());
     }
 
+    @Override
+    @Transactional
+    public void deleteCave(Long caveID) {
+        Cave cave = findCaveById(caveID);
+        caveRepository.delete(cave);
+    }
+
     private Member findMemberById(Long memberId){
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));

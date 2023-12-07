@@ -20,4 +20,7 @@ public interface CaveService {
 
     //* 동굴 정보 조회
     CaveDetailGetResponseDto getCaveDetail(Long memberId, Long caveId);
+
+    //* 동굴 삭제
+    void deleteCave(Long caveId);
 }

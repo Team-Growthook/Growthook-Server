@@ -51,5 +51,13 @@ public class CaveController {
     public ApiResponse<CaveDetailGetResponseDto> getCaveDetail(@PathVariable Long memberId, @PathVariable Long caveId) {
         return ApiResponse.success(SuccessStatus.GET_CAVE_DETAIL, caveService.getCaveDetail(memberId, caveId));
     }
+
+    @DeleteMapping("cave/{caveId}/delete")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "CaveDelete", description = "동굴을 삭제하는 API입니다.")
+    public ApiResponse deleteCave(@PathVariable Long caveId) {
+        caveService.deleteCave(caveId);
+        return ApiResponse.success(SuccessStatus.DELETE_CAVE.getStatusCode(),SuccessStatus.DELETE_CAVE.getMessage());
+    }
 }
 
