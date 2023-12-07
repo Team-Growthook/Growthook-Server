@@ -45,10 +45,6 @@ public class CaveServiceImpl implements CaveService {
     public List<CaveAllResponseDto> getCaveAll(Long memberId){
         List<Cave> caves = caveRepository.findAllByMemberId(memberId);
 
-        if(caves.isEmpty()) {
-            throw new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER_CAVE.getMessage());
-        }
-
         return caves.stream()
                 .map(cave -> CaveAllResponseDto.of(cave.getId(), cave.getName()))
                 .collect(Collectors.toList());
