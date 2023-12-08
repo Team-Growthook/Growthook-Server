@@ -29,6 +29,7 @@ public enum SuccessStatus {
      * seed
      */
     POST_SEED_SUCCESS(HttpStatus.CREATED, "씨앗 생성 성공"),
+    DELETE_SEED(HttpStatus.OK, "씨앗 삭제 성공"),
     ;
 
     private final HttpStatus httpStatus;
