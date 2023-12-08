@@ -29,7 +29,7 @@ public class CaveServiceImpl implements CaveService {
     @Override
     @Transactional
     public CaveCreateResponseDto createCave(Long memberId, CaveCreateRequestDto caveCreateRequestDto){
-        Member member = findMemberById(memberId);
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
         Cave cave = Cave.builder()
                 .name(caveCreateRequestDto.getName())
                 .introduction(caveCreateRequestDto.getIntroduction())
@@ -52,14 +52,14 @@ public class CaveServiceImpl implements CaveService {
     @Override
     @Transactional
     public void updateCave(Long caveId, CaveUpdateRequestDto caveUpdateRequestDto){
-        Cave existingCave = findCaveById(caveId);
+        Cave existingCave = caveRepository.findCaveByIdOrThrow(caveId);
         existingCave.updateCave(caveUpdateRequestDto.getName(), caveUpdateRequestDto.getIntroduction(), caveUpdateRequestDto.getIsShared());
     }
 
     @Override
     public CaveDetailGetResponseDto getCaveDetail(Long memberId, Long caveId){
-        Member member = findMemberById(memberId);
-        Cave cave = findCaveById(caveId);
+        Member member = memberRepository.findMemberByIdOrThrow(memberId);
+        Cave cave = caveRepository.findCaveByIdOrThrow(caveId);
 
         return CaveDetailGetResponseDto.of(cave.getName(), cave.getIntroduction(), member.getNickname(), cave.getIsShared());
     }
@@ -67,17 +67,8 @@ public class CaveServiceImpl implements CaveService {
     @Override
     @Transactional
     public void deleteCave(Long caveID) {
-        Cave cave = findCaveById(caveID);
+        Cave cave = caveRepository.findCaveByIdOrThrow(caveID);
         caveRepository.delete(cave);
     }
 
-    private Member findMemberById(Long memberId){
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
-    }
-
-    private Cave findCaveById(Long caveId) {
-        return caveRepository.findCaveById(caveId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_CAVE.getMessage()));
-    }
 }
