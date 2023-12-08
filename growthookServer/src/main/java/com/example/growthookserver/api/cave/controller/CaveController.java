@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1")
-@Tag(name = "Cave Controller", description = "Cave API Document")
+@Tag(name = "Cave - 동굴 관련 API", description = "Cave API Document")
 public class CaveController {
     private final CaveService caveService;
 

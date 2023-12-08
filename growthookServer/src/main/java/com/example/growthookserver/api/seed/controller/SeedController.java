@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1")
-@Tag(name = "Seed Controller", description = "Seed API Document")
+@Tag(name = "Seed - 인사이트 관련 API", description = "Seed API Document")
 public class SeedController {
 
   private final SeedService seedService;
