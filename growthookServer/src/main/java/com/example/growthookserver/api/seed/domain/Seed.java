@@ -48,14 +48,14 @@ public class Seed extends BaseTimeEntity {
     private List<ActionPlan> actionPlans = new ArrayList<>();
 
     @Builder
-    public Seed(String insight, String memo, String source, String url, LocalDate lockDate, Boolean isScraped, Boolean isLocked, Cave cave) {
+    public Seed(String insight, String memo, String source, String url, Integer goalMonth, Cave cave) {
         this.insight = insight;
         this.memo = memo;
         this.source = source;
         this.url = url;
-        this.lockDate = lockDate;
-        this.isScraped = isScraped;
-        this.isLocked = isLocked;
+        this.lockDate = LocalDate.now().plusDays(goalMonth * 30);
+        this.isScraped = false;
+        this.isLocked = false;
         this.cave = cave;
     }
 }
