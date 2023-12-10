@@ -66,8 +66,8 @@ public class CaveServiceImpl implements CaveService {
 
     @Override
     @Transactional
-    public void deleteCave(Long caveID) {
-        Cave cave = caveRepository.findCaveByIdOrThrow(caveID);
+    public void deleteCave(Long caveId) {
+        Cave cave = caveRepository.findCaveByIdOrThrow(caveId);
         caveRepository.delete(cave);
     }
 

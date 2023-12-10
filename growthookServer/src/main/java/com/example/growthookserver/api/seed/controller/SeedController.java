@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,5 +35,14 @@ public class SeedController {
     return ApiResponse.success(
         SuccessStatus.POST_SEED_SUCCESS, seedService.createSeed(caveId, seedCreateRequestDto));
   }
+
+  @DeleteMapping("/seed/{seedId}")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedDelete", description = "씨앗 삭제 API입니다.")
+  public ApiResponse deleteSeed(@PathVariable Long seedId) {
+    seedService.deleteSeed(seedId);
+    return ApiResponse.success(SuccessStatus.DELETE_SEED.getStatusCode(),SuccessStatus.DELETE_SEED.getMessage());
+  }
+
 
 }

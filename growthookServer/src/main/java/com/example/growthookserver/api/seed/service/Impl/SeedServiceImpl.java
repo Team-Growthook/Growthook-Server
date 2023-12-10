@@ -35,4 +35,11 @@ public class SeedServiceImpl implements SeedService {
     return SeedCreateResponseDto.of(savedSeed.getId());
   }
 
+  @Override
+  @Transactional
+  public void deleteSeed(Long seedId) {
+    Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
+    seedRepository.delete(seed);
+  }
+
 }

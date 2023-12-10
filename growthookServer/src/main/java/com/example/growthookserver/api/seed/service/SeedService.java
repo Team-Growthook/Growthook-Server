@@ -9,4 +9,6 @@ public interface SeedService {
   //* 씨앗 생성
   SeedCreateResponseDto createSeed(Long caveId, SeedCreateRequestDto seedCreateRequestDto);
 
+  //* 씨앗 삭제
+  void deleteSeed(Long seedId);
 }
