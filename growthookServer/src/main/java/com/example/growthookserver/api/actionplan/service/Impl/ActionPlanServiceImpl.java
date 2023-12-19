@@ -2,6 +2,7 @@ package com.example.growthookserver.api.actionplan.service.Impl;
 
 import com.example.growthookserver.api.actionplan.domain.ActionPlan;
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
+import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.repository.ActionPlanRepository;
@@ -42,5 +43,12 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         return actionPlans.stream()
                 .map(actionPlan -> ActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(), actionPlan.getIsFinished()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateActionPlan(Long actionPlanId, ActionPlanUpdateRequestDto actionPlanUpdateRequestDto) {
+        ActionPlan existingActionPlan = actionPlanRepository.findActionPlanByIdOrThrow(actionPlanId);
+        existingActionPlan.updateActionPlan(actionPlanUpdateRequestDto.getContent());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.actionplan.controller;
 
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
+import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.service.ActionPlanService;
@@ -33,5 +34,13 @@ public class ActionPlanController {
     @Operation(summary = "ActionPlanGet", description = "씨앗 별 액션 플랜 조회 API입니다.")
     public ApiResponse<ActionPlanGetResponseDto> getActionPlan(@PathVariable Long seedId) {
         return ApiResponse.success(SuccessStatus.GET_SEED_ACTIONPLAN_SUCCESS, actionPlanService.getActionPlan(seedId));
+    }
+
+    @PatchMapping("actionPlan/{actionPlanId}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "ActionPlanPatch", description = "액션 플랜 내용을 수정하는 API입니다.")
+    public ApiResponse updateActionPlan(@PathVariable Long actionPlanId, @Valid @RequestBody ActionPlanUpdateRequestDto actionPlanUpdateRequestDto) {
+        actionPlanService.updateActionPlan(actionPlanId, actionPlanUpdateRequestDto);
+        return ApiResponse.success(SuccessStatus.PATCH_ACTIONPLAN_SUCCESS.getStatusCode(), SuccessStatus.PATCH_ACTIONPLAN_SUCCESS.getMessage());
     }
 }
