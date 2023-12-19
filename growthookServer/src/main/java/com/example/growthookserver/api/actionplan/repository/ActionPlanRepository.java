@@ -11,6 +11,8 @@ import java.util.Optional;
 
 public interface ActionPlanRepository extends JpaRepository<ActionPlan,Long> {
 
+    List<ActionPlan> findAllBySeedCaveMemberIdAndIsFinished(Long memberId, Boolean isFinished);
+
     @Query("SELECT ap FROM ActionPlan ap JOIN ap.seed s JOIN s.cave c JOIN c.member m WHERE m.id = :memberId")
     List<ActionPlan> findAllByMemberId(Long memberId);
     List<ActionPlan> findAllBySeedId(Long seedId);
