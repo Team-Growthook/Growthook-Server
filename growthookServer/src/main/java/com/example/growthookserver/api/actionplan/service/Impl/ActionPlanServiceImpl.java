@@ -80,8 +80,6 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         }
 
         long finishedActionPlan = allActionPlans.stream().filter(ActionPlan::getIsFinished).count();
-        System.out.println(totalActionPlans);
-        System.out.println(finishedActionPlan);
         double ratio = (double) finishedActionPlan / totalActionPlans;
         BigDecimal roundedRatio = BigDecimal.valueOf(ratio * 100.0).setScale(1, RoundingMode.HALF_UP);
         return roundedRatio.intValue();
