@@ -43,4 +43,12 @@ public class ActionPlanController {
         actionPlanService.updateActionPlan(actionPlanId, actionPlanUpdateRequestDto);
         return ApiResponse.success(SuccessStatus.PATCH_ACTIONPLAN_SUCCESS.getStatusCode(), SuccessStatus.PATCH_ACTIONPLAN_SUCCESS.getMessage());
     }
+
+    @DeleteMapping("actionPlan/{actionPlanId}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "ActionPlanDelete", description = "액션 플랜을 삭제하는 API입니다.")
+    public ApiResponse deleteActionPlan(@PathVariable Long actionPlanId) {
+        actionPlanService.deleteActionPlan(actionPlanId);
+        return ApiResponse.success(SuccessStatus.DELETE_ACTIONPLAN_SUCCESS.getStatusCode(), SuccessStatus.DELETE_ACTIONPLAN_SUCCESS.getMessage());
+    }
 }
