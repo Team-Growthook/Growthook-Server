@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(staticName = "of")
-public class DoingActionPlanGetResponseDto {
+public class FinishedActionPlanGetResponseDto {
     private Long actionPlanId;
 
     private String content;
