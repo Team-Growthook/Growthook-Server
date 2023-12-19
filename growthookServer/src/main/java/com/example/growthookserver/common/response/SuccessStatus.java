@@ -38,7 +38,8 @@ public enum SuccessStatus {
     GET_SEED_ACTIONPLAN_SUCCESS(HttpStatus.OK, "씨앗 별 액션 플랜 조회 성공"),
     PATCH_ACTIONPLAN_SUCCESS(HttpStatus.OK, "액션 플랜 수정 성공"),
     DELETE_ACTIONPLAN_SUCCESS(HttpStatus.OK,"액션 플랜 삭제 성공"),
-    COMPLETE_ACTIONPLAN_SUCCESS(HttpStatus.OK, "액션 플랜 완료하기 성공")
+    COMPLETE_ACTIONPLAN_SUCCESS(HttpStatus.OK, "액션 플랜 완료하기 성공"),
+    GET_FINISHED_ACTIONPLAN_PERCENT(HttpStatus.OK, "완료한 액션 플랜 퍼센트 조회 성공")
     ;
 
     private final HttpStatus httpStatus;

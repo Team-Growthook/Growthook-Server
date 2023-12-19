@@ -54,9 +54,16 @@ public class ActionPlanController {
 
     @PatchMapping("actionPlan/{actionPlanId}/completion")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "ACtionPlanComplete", description = "액션 플랜을 완료하는 API입니다.")
+    @Operation(summary = "ActionPlanComplete", description = "액션 플랜을 완료하는 API입니다.")
     public ApiResponse completeActionPlan(@PathVariable Long actionPlanId) {
         actionPlanService.completeActionPlan(actionPlanId);
         return ApiResponse.success(SuccessStatus.COMPLETE_ACTIONPLAN_SUCCESS.getStatusCode(),SuccessStatus.COMPLETE_ACTIONPLAN_SUCCESS.getMessage());
+    }
+
+    @GetMapping("member/{memberId}/actionPlan/percent")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "ActionPlanPercent", description = "완료한 액션 플랜 퍼센트를 구하는 API입니다.")
+    public ApiResponse<Integer> getActionPlanPercent(@PathVariable Long memberId) {
+        return ApiResponse.success(SuccessStatus.GET_FINISHED_ACTIONPLAN_PERCENT, actionPlanService.getActionPlanPercent(memberId));
     }
 }
