@@ -48,4 +48,8 @@ public class ActionPlan extends BaseTimeEntity {
     public void updateActionPlan(String newContent) {
         this.content = newContent;
     }
+
+    public void completeActionPlan(Boolean newIsFinished) {
+        this.isFinished = newIsFinished;
+    }
 }
