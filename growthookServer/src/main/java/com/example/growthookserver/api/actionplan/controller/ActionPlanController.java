@@ -4,6 +4,7 @@ import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRe
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
+import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.service.ActionPlanService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -65,5 +66,12 @@ public class ActionPlanController {
     @Operation(summary = "ActionPlanPercent", description = "완료한 액션 플랜 퍼센트를 구하는 API입니다.")
     public ApiResponse<Integer> getActionPlanPercent(@PathVariable Long memberId) {
         return ApiResponse.success(SuccessStatus.GET_FINISHED_ACTIONPLAN_PERCENT, actionPlanService.getActionPlanPercent(memberId));
+    }
+
+    @GetMapping("member/{memberId}/doing")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "DoingActionPlan", description = "진행 중인 액션 플랜 목록을 조회하는API입니다.")
+    public ApiResponse<DoingActionPlanGetResponseDto> getDoingActionPlan(@PathVariable Long memberId) {
+        return ApiResponse.success(SuccessStatus.GET_DOING_ACTIONPLAN_SUCCESS,actionPlanService.getDoingActionPlan(memberId));
     }
 }
