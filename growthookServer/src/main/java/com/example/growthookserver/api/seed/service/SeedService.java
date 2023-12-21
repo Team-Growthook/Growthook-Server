@@ -3,9 +3,11 @@ package com.example.growthookserver.api.seed.service;
 import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
 import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
+import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 
 public interface SeedService {
   //* 씨앗 생성
@@ -19,4 +21,7 @@ public interface SeedService {
 
   //* 씨앗 상세 정보 조회
   SeedDetailGetResponseDto getSeedDetail(Long seedId);
+
+  //* 씨앗 이동
+  SeedMoveResponseDto moveSeed(Long seedId, SeedMoveRequestDto seedMoveRequestDto);
 }

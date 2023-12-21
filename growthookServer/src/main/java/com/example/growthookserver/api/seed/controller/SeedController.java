@@ -1,9 +1,11 @@
 package com.example.growthookserver.api.seed.controller;
 
+import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.service.SeedService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -51,6 +53,13 @@ public class SeedController {
   public ApiResponse updateSeed(@PathVariable Long seedId, @Valid @RequestBody SeedUpdateRequestDto seedUpdateRequestDto) {
     seedService.updateSeed(seedId, seedUpdateRequestDto);
     return ApiResponse.success(SuccessStatus.PATCH_SEED_SUCCESS.getStatusCode(), SuccessStatus.PATCH_SEED_SUCCESS.getMessage());
+  }
+
+  @PostMapping("seed/{seedId}/move")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedMove", description = "씨앗을 다른 동굴로 이동하는 API입니다.")
+  public ApiResponse<SeedMoveResponseDto> moveSeed(@PathVariable Long seedId, @Valid @RequestBody SeedMoveRequestDto seedMoveRequestDto) {
+    return ApiResponse.success(SuccessStatus.MOVE_SEED_SUCCESS, seedService.moveSeed(seedId, seedMoveRequestDto));
   }
 
 }

@@ -4,9 +4,11 @@ import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
 import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
+import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +65,15 @@ public class SeedServiceImpl implements SeedService {
     long remainingDays = currentDate.until(lockDate, ChronoUnit.DAYS);
     return SeedDetailGetResponseDto.of(seed.getCave().getName(), seed.getInsight(), seed.getMemo(), seed.getSource(),
             seed.getUrl(), seed.getIsScraped(), lockDate.toString(), remainingDays);
+  }
+
+  @Override
+  @Transactional
+  public SeedMoveResponseDto moveSeed(Long seedId, SeedMoveRequestDto seedMoveRequestDto) {
+    Cave targetCave = caveRepository.findCaveByIdOrThrow(seedMoveRequestDto.getCaveId());
+    Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
+    seed.changeCave(targetCave);
+    return SeedMoveResponseDto.of(seed.getCave().getId(), seed.getCave().getName());
   }
 
 }
