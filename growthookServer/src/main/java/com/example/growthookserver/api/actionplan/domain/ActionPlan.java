@@ -38,10 +38,10 @@ public class ActionPlan extends BaseTimeEntity {
     private List<Review> reviews = new ArrayList<>();
 
     @Builder
-    public ActionPlan(String content, Boolean isScraped, Boolean isFinished, Seed seed) {
+    public ActionPlan(String content, Seed seed) {
         this.content = content;
-        this.isScraped = isScraped;
-        this.isFinished = isFinished;
+        this.isScraped = false;
+        this.isFinished = false;
         this.seed = seed;
     }
 }
