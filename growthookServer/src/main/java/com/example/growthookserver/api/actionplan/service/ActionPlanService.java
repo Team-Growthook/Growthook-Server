@@ -5,6 +5,7 @@ import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRe
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGetResponseDto;
+import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPlanGetResponseDto;
 
 import java.util.List;
 
@@ -27,5 +28,9 @@ public interface ActionPlanService {
     //* 액션 플랜 달성 퍼센트 조회
     int getActionPlanPercent(Long memberId);
 
+    //* 진행 중인 액션 플랜 목록 조회
     List<DoingActionPlanGetResponseDto> getDoingActionPlan(Long memberId);
+
+    //* 완료한 액션 플랜 목록 조회
+    List<FinishedActionPlanGetResponseDto> getFinishedActionPlan(Long memberId);
 }

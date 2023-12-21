@@ -6,6 +6,7 @@ import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRe
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGetResponseDto;
+import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.repository.ActionPlanRepository;
 import com.example.growthookserver.api.actionplan.service.ActionPlanService;
 import com.example.growthookserver.api.seed.domain.Seed;
@@ -79,8 +80,6 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         }
 
         long finishedActionPlan = allActionPlans.stream().filter(ActionPlan::getIsFinished).count();
-        System.out.println(totalActionPlans);
-        System.out.println(finishedActionPlan);
         double ratio = (double) finishedActionPlan / totalActionPlans;
         BigDecimal roundedRatio = BigDecimal.valueOf(ratio * 100.0).setScale(1, RoundingMode.HALF_UP);
         return roundedRatio.intValue();
@@ -91,7 +90,16 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         List<ActionPlan> doingActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinished(memberId,false);
 
         return doingActionPlans.stream()
-                .map(actionPlan -> DoingActionPlanGetResponseDto.of(actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId()))
+                .map(actionPlan -> DoingActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FinishedActionPlanGetResponseDto> getFinishedActionPlan(Long memberId) {
+        List<ActionPlan> finishedActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinished(memberId,true);
+
+        return finishedActionPlans.stream()
+                .map(actionPlan -> FinishedActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId()))
                 .collect(Collectors.toList());
     }
 }
