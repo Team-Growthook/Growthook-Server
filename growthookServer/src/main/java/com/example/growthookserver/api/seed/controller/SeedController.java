@@ -3,6 +3,7 @@ package com.example.growthookserver.api.seed.controller;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.service.SeedService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -35,6 +36,13 @@ public class SeedController {
   public ApiResponse deleteSeed(@PathVariable Long seedId) {
     seedService.deleteSeed(seedId);
     return ApiResponse.success(SuccessStatus.DELETE_SEED.getStatusCode(),SuccessStatus.DELETE_SEED.getMessage());
+  }
+
+  @GetMapping("seed/{seedId}/detail")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedDetailGet", description = "씨앗의 상세 내용을 조회하는 API입니다.")
+  public ApiResponse<SeedDetailGetResponseDto> getSeedDetail(@PathVariable Long seedId) {
+    return ApiResponse.success(SuccessStatus.GET_SEED_DETAIL, seedService.getSeedDetail(seedId));
   }
 
   @PatchMapping("/seed/{seedId}")

@@ -31,6 +31,7 @@ public enum SuccessStatus {
     POST_SEED_SUCCESS(HttpStatus.CREATED, "씨앗 생성 성공"),
     DELETE_SEED(HttpStatus.OK, "씨앗 삭제 성공"),
     PATCH_SEED_SUCCESS(HttpStatus.OK, "씨앗 수정 성공"),
+    GET_SEED_DETAIL(HttpStatus.OK, "씨앗 상세 정보 조회 성공"),
 
     /**
      * actionplan
