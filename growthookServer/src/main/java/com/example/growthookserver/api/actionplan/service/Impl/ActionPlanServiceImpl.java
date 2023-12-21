@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,8 +63,25 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     @Override
     @Transactional
-    public void completeActionPlan(Long aactionPlanId) {
-        ActionPlan existinActionPlan = actionPlanRepository.findActionPlanByIdOrThrow(aactionPlanId);
+    public void completeActionPlan(Long actionPlanId) {
+        ActionPlan existinActionPlan = actionPlanRepository.findActionPlanByIdOrThrow(actionPlanId);
         existinActionPlan.completeActionPlan(true);
+    }
+
+    @Override
+    public int getActionPlanPercent(Long memberId) {
+        List<ActionPlan> allActionPlans = actionPlanRepository.findAllByMemberId(memberId);
+        long totalActionPlans = allActionPlans.size();
+
+        if(totalActionPlans == 0) {
+            return 0;
+        }
+
+        long finishedActionPlan = allActionPlans.stream().filter(ActionPlan::getIsFinished).count();
+        System.out.println(totalActionPlans);
+        System.out.println(finishedActionPlan);
+        double ratio = (double) finishedActionPlan / totalActionPlans;
+        BigDecimal roundedRatio = BigDecimal.valueOf(ratio * 100.0).setScale(1, RoundingMode.HALF_UP);
+        return roundedRatio.intValue();
     }
 }

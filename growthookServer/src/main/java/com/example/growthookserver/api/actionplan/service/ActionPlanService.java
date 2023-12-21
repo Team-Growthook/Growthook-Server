@@ -22,4 +22,7 @@ public interface ActionPlanService {
 
     //* 액션 플랜 완료 토글
     void completeActionPlan(Long actionPlanId);
+
+    //* 액션 플랜 달성 퍼센트 조회
+    int getActionPlanPercent(Long memberId);
 }
