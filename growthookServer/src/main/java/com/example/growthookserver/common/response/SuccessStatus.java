@@ -34,7 +34,8 @@ public enum SuccessStatus {
     /**
      * actionplan
      */
-    POST_ACTIONPLAN_SUCCESS(HttpStatus.CREATED, "액션 플랜 생성 성공")
+    POST_ACTIONPLAN_SUCCESS(HttpStatus.CREATED, "액션 플랜 생성 성공"),
+    GET_SEED_ACTIONPLAN_SUCCESS(HttpStatus.OK, "씨앗 별 액션 플랜 조회 성공")
     ;
 
     private final HttpStatus httpStatus;

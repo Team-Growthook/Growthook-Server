@@ -2,6 +2,7 @@ package com.example.growthookserver.api.actionplan.controller;
 
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
+import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.service.ActionPlanService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -25,5 +26,12 @@ public class ActionPlanController {
     @Operation(summary = "ActionPlanPost",description = "액션 플랜 생성 API입니다.")
     public ApiResponse<ActionPlanCreateResponseDto> createActionPlan(@PathVariable("seedId")Long seedId, @Valid @RequestBody ActionPlanCreateRequestDto actionPlanCreateRequestDto) {
         return ApiResponse.success(SuccessStatus.POST_ACTIONPLAN_SUCCESS, actionPlanService.createActionPlan(seedId, actionPlanCreateRequestDto));
+    }
+
+    @GetMapping("seed/{seedId}/actionPlan")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "ActionPlanGet", description = "씨앗 별 액션 플랜 조회 API입니다.")
+    public ApiResponse<ActionPlanGetResponseDto> getActionPlan(@PathVariable Long seedId) {
+        return ApiResponse.success(SuccessStatus.GET_SEED_ACTIONPLAN_SUCCESS, actionPlanService.getActionPlan(seedId));
     }
 }
