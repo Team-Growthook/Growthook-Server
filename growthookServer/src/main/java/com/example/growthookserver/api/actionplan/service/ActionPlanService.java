@@ -19,4 +19,7 @@ public interface ActionPlanService {
 
     //* 액션 플랜 삭제
     void deleteActionPlan(Long actionPlanId);
+
+    //* 액션 플랜 완료 토글
+    void completeActionPlan(Long actionPlanId);
 }
