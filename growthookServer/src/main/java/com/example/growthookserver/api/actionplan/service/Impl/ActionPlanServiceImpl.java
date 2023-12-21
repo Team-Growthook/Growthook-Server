@@ -51,4 +51,11 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         ActionPlan existingActionPlan = actionPlanRepository.findActionPlanByIdOrThrow(actionPlanId);
         existingActionPlan.updateActionPlan(actionPlanUpdateRequestDto.getContent());
     }
+
+    @Override
+    @Transactional
+    public void deleteActionPlan(Long actionPlanId) {
+        ActionPlan exisitngActionPlan = actionPlanRepository.findActionPlanByIdOrThrow(actionPlanId);
+        actionPlanRepository.delete(exisitngActionPlan);
+    }
 }

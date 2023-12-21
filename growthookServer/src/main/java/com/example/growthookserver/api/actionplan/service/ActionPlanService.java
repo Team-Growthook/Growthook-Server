@@ -16,4 +16,7 @@ public interface ActionPlanService {
 
     //* 액션 플랜 수정
     void updateActionPlan(Long actionPlanId, ActionPlanUpdateRequestDto actionPlanUpdateRequestDto);
+
+    //* 액션 플랜 삭제
+    void deleteActionPlan(Long actionPlanId);
 }
