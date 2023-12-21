@@ -4,6 +4,7 @@ import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
 import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
+import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
@@ -40,6 +41,14 @@ public class SeedServiceImpl implements SeedService {
   public void deleteSeed(Long seedId) {
     Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
     seedRepository.delete(seed);
+  }
+
+  @Override
+  @Transactional
+  public void updateSeed(Long seedId, SeedUpdateRequestDto seedUpdateRequestDto) {
+    Seed existingSeed = seedRepository.findSeedByIdOrThrow(seedId);
+    existingSeed.updateSeed(seedUpdateRequestDto.getInsight(), seedUpdateRequestDto.getMemo(),
+            seedUpdateRequestDto.getSource(), seedUpdateRequestDto.getUrl());
   }
 
 }

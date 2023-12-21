@@ -1,8 +1,7 @@
 package com.example.growthookserver.api.seed.controller;
 
-import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
-import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
+import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.service.SeedService;
 import com.example.growthookserver.common.response.ApiResponse;
@@ -12,13 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +21,7 @@ public class SeedController {
 
   private final SeedService seedService;
 
-  @PostMapping("cave/{caveId}/seed")
+  @PostMapping("/cave/{caveId}/seed")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "SeedPost", description = "씨앗 생성 API입니다.")
   public ApiResponse<SeedCreateResponseDto> createSeed(@PathVariable("caveId") Long caveId, @Valid @RequestBody SeedCreateRequestDto seedCreateRequestDto) {
@@ -44,5 +37,12 @@ public class SeedController {
     return ApiResponse.success(SuccessStatus.DELETE_SEED.getStatusCode(),SuccessStatus.DELETE_SEED.getMessage());
   }
 
+  @PatchMapping("/seed/{seedId}")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedPatch", description = "씨앗 내용을 수정하는 API입니다.")
+  public ApiResponse updateSeed(@PathVariable Long seedId, @Valid @RequestBody SeedUpdateRequestDto seedUpdateRequestDto) {
+    seedService.updateSeed(seedId, seedUpdateRequestDto);
+    return ApiResponse.success(SuccessStatus.PATCH_SEED_SUCCESS.getStatusCode(), SuccessStatus.PATCH_SEED_SUCCESS.getMessage());
+  }
 
 }

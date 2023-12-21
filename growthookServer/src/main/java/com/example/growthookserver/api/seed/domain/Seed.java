@@ -58,4 +58,11 @@ public class Seed extends BaseTimeEntity {
         this.isLocked = false;
         this.cave = cave;
     }
+
+    public void updateSeed(String newInsight, String newMemo, String newSource, String newUrl) {
+        this.insight = newInsight;
+        this.memo = newMemo;
+        this.source = newSource;
+        this.url = newUrl;
+    }
 }
