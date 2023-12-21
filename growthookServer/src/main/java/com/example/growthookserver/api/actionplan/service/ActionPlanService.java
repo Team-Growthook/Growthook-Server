@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.actionplan.service;
 
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
+import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 
@@ -12,4 +13,7 @@ public interface ActionPlanService {
 
     //* 씨앗 별 액션 플랜 조회
     List<ActionPlanGetResponseDto> getActionPlan(Long seedId);
+
+    //* 액션 플랜 수정
+    void updateActionPlan(Long actionPlanId, ActionPlanUpdateRequestDto actionPlanUpdateRequestDto);
 }
