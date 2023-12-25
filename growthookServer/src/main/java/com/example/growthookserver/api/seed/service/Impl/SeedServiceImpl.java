@@ -6,11 +6,15 @@ import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +53,16 @@ public class SeedServiceImpl implements SeedService {
     Seed existingSeed = seedRepository.findSeedByIdOrThrow(seedId);
     existingSeed.updateSeed(seedUpdateRequestDto.getInsight(), seedUpdateRequestDto.getMemo(),
             seedUpdateRequestDto.getSource(), seedUpdateRequestDto.getUrl());
+  }
+
+  @Override
+  public SeedDetailGetResponseDto getSeedDetail(Long seedId) {
+    Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
+    LocalDate lockDate = seed.getLockDate();
+    LocalDate currentDate = LocalDate.now();
+    long remainingDays = currentDate.until(lockDate, ChronoUnit.DAYS);
+    return SeedDetailGetResponseDto.of(seed.getCave().getName(), seed.getInsight(), seed.getMemo(), seed.getSource(),
+            seed.getUrl(), seed.getIsScraped(), lockDate.toString(), remainingDays);
   }
 
 }
