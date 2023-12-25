@@ -65,4 +65,8 @@ public class Seed extends BaseTimeEntity {
         this.source = newSource;
         this.url = newUrl;
     }
+
+    public void changeCave(Cave newCave) {
+        this.cave = newCave;
+    }
 }
