@@ -33,6 +33,7 @@ public enum SuccessStatus {
     PATCH_SEED_SUCCESS(HttpStatus.OK, "씨앗 수정 성공"),
     GET_SEED_DETAIL(HttpStatus.OK, "씨앗 상세 정보 조회 성공"),
     MOVE_SEED_SUCCESS(HttpStatus.OK, "씨앗 이동 성공"),
+    GET_SEED_ALARM(HttpStatus.OK,"씨앗 알람 조회 성공"),
 
     /**
      * actionplan
