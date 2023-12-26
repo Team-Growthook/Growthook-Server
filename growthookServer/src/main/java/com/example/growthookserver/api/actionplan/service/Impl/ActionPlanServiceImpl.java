@@ -30,14 +30,18 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     @Override
     @Transactional
-    public ActionPlanCreateResponseDto createActionPlan(Long seedId, ActionPlanCreateRequestDto actionPlanCreateRequestDto){
+    public void createActionPlan(Long seedId, ActionPlanCreateRequestDto actionPlanCreateRequestDto){
         Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
-        ActionPlan actionPlan = ActionPlan.builder()
-                .content(actionPlanCreateRequestDto.getContent())
-                .seed(seed)
-                .build();
-        ActionPlan savedActionPlan = actionPlanRepository.save(actionPlan);
-        return ActionPlanCreateResponseDto.of(savedActionPlan.getId());
+
+        List<String> contents = actionPlanCreateRequestDto.getContents();
+
+        for(String content : contents) {
+            ActionPlan actionPlan = ActionPlan.builder()
+                    .content(content)
+                    .seed(seed)
+                    .build();
+            actionPlanRepository.save(actionPlan);
+        }
     }
 
     @Override
