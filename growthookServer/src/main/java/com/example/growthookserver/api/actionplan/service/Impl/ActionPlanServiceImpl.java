@@ -3,7 +3,6 @@ package com.example.growthookserver.api.actionplan.service.Impl;
 import com.example.growthookserver.api.actionplan.domain.ActionPlan;
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
-import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPlanGetResponseDto;
