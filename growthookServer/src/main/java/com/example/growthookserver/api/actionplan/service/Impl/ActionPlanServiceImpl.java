@@ -37,13 +37,9 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
         List<String> contents = actionPlanCreateRequestDto.getContents();
 
-        for(String content : contents) {
-            ActionPlan actionPlan = ActionPlan.builder()
-                    .content(content)
-                    .seed(seed)
-                    .build();
-            actionPlanRepository.save(actionPlan);
-        }
+        contents.stream()
+                .map(content -> ActionPlan.builder().content(content).seed(seed).build())
+                .forEach(actionPlanRepository::save);
     }
 
     @Override

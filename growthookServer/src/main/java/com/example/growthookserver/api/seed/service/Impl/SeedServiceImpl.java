@@ -88,15 +88,12 @@ public class SeedServiceImpl implements SeedService {
     List<Seed> seeds = seedRepository.findByCave_MemberIdAndLockDateBetween(memberId, now, threeDaysLater);
 
     if(seeds.isEmpty()) {
-      return SeedAlarmGetResponseDto.of(0,0);
+      return SeedAlarmGetResponseDto.of(0);
     }
 
     int seedCount = seeds.size();
 
-    Seed earliestSeed = findEarliestSeed(seeds);
-    int daysRemaining = calculateDaysRemaining(now, earliestSeed.getLockDate());
-
-    return SeedAlarmGetResponseDto.of(seedCount, daysRemaining);
+    return SeedAlarmGetResponseDto.of(seedCount);
   }
 
   private Seed findEarliestSeed(List<Seed> seeds) {
