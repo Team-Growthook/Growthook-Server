@@ -3,7 +3,6 @@ package com.example.growthookserver.api.actionplan.service.Impl;
 import com.example.growthookserver.api.actionplan.domain.ActionPlan;
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
-import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPlanGetResponseDto;
@@ -30,14 +29,18 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     @Override
     @Transactional
-    public ActionPlanCreateResponseDto createActionPlan(Long seedId, ActionPlanCreateRequestDto actionPlanCreateRequestDto){
+    public void createActionPlan(Long seedId, ActionPlanCreateRequestDto actionPlanCreateRequestDto){
         Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
-        ActionPlan actionPlan = ActionPlan.builder()
-                .content(actionPlanCreateRequestDto.getContent())
-                .seed(seed)
-                .build();
-        ActionPlan savedActionPlan = actionPlanRepository.save(actionPlan);
-        return ActionPlanCreateResponseDto.of(savedActionPlan.getId());
+
+        List<String> contents = actionPlanCreateRequestDto.getContents();
+
+        for(String content : contents) {
+            ActionPlan actionPlan = ActionPlan.builder()
+                    .content(content)
+                    .seed(seed)
+                    .build();
+            actionPlanRepository.save(actionPlan);
+        }
     }
 
     @Override
