@@ -8,6 +8,7 @@ import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
+import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
@@ -17,11 +18,14 @@ import com.example.growthookserver.api.seed.service.SeedService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -87,6 +91,22 @@ public class SeedServiceImpl implements SeedService {
         .map(seed -> SeedListByCaveGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
             seed.getIsLocked(), seed.getIsScraped(), checkHasActionPlan(seed)))
         .collect(Collectors.toList());
+  }
+  
+  @Override
+  public SeedAlarmGetResponseDto getSeedAlarm(Long memberId) {
+    LocalDate now = LocalDate.now();
+    LocalDate threeDaysLater = now.plusDays(3);
+
+    List<Seed> seeds = seedRepository.findByCave_MemberIdAndLockDateBetween(memberId, now, threeDaysLater);
+
+    if(seeds.isEmpty()) {
+      return SeedAlarmGetResponseDto.of(0);
+    }
+
+    int seedCount = seeds.size();
+
+    return SeedAlarmGetResponseDto.of(seedCount);
   }
 
   private Long calculateRemainingDays(LocalDate lockDate) {

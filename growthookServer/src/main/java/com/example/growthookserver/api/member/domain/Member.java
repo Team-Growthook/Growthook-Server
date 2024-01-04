@@ -51,4 +51,9 @@ public class Member extends BaseTimeEntity {
         this.usedSsuk = usedSsuk;
         this.gatheredSsuk = gatheredSsuk;
     }
+
+    @Builder
+    public void incrementGatheredSsuk() {
+        this.gatheredSsuk = (this.gatheredSsuk == null ? 0 : this.gatheredSsuk) + 1;
+    }
 }

@@ -3,6 +3,7 @@ package com.example.growthookserver.api.seed.controller;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
+import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
@@ -72,4 +73,10 @@ public class SeedController {
     return ApiResponse.success(SuccessStatus.GET_SEED_LIST_BY_CAVE, seedService.getSeedListByCave(caveId));
   }
 
+  @GetMapping("member/{memberId}/alarm")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedAlarm", description = "기한이 3일 이내로 남은 씨앗에 대한 알림을 조회하는 API입니다.")
+  public ApiResponse<SeedAlarmGetResponseDto> getSeedAlarm(@PathVariable Long memberId) {
+    return ApiResponse.success(SuccessStatus.GET_SEED_ALARM, seedService.getSeedAlarm(memberId));
+  }
 }
