@@ -95,14 +95,4 @@ public class SeedServiceImpl implements SeedService {
 
     return SeedAlarmGetResponseDto.of(seedCount);
   }
-
-  private Seed findEarliestSeed(List<Seed> seeds) {
-    return seeds.stream()
-            .min(Comparator.comparing(Seed::getLockDate))
-            .orElse(null);
-  }
-
-  private int calculateDaysRemaining(LocalDate now, LocalDate localDate) {
-    return (int) ChronoUnit.DAYS.between(now, localDate);
-  }
 }
