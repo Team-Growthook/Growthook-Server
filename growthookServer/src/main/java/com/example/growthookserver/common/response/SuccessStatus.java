@@ -36,6 +36,7 @@ public enum SuccessStatus {
     MOVE_SEED_SUCCESS(HttpStatus.OK, "씨앗 이동 성공"),
     GET_SEED_LIST_BY_CAVE(HttpStatus.OK, "보관함별로 씨앗 리스트 조회 성공"),
     GET_SEED_LIST(HttpStatus.OK, "전체 씨앗 리스트 조회 성공" ),
+    GET_SEED_ALARM(HttpStatus.OK,"씨앗 알람 조회 성공"),
 
     /**
      * actionplan

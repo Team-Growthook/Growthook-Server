@@ -16,6 +16,7 @@ public enum ErrorStatus {
     NO_TOKEN("토큰을 넣어주세요."),
     INVALID_MEMBER("유효하지 않은 유저입니다."),
     ANOTHER_ACCESS_TOKEN("지원하지 않는 소셜 플랫폼입니다."),
+    ALREADY_COMPLETE_ACTIONPLAN("이미 완료된 액션 플랜입니다."),
 
     /**
      * 401 UNAUTHORIZED
