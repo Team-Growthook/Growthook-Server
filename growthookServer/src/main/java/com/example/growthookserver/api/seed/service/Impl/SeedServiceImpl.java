@@ -4,6 +4,8 @@ import com.example.growthookserver.api.actionplan.domain.ActionPlan;
 import com.example.growthookserver.api.actionplan.repository.ActionPlanRepository;
 import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
+import com.example.growthookserver.api.member.domain.Member;
+import com.example.growthookserver.api.member.repository.MemberRepository;
 import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
@@ -35,6 +37,7 @@ public class SeedServiceImpl implements SeedService {
   private final CaveRepository caveRepository;
   private final SeedRepository seedRepository;
   private final ActionPlanRepository actionPlanRepository;
+  private final MemberRepository memberRepository;
 
   @Override
   @Transactional
@@ -123,6 +126,10 @@ public class SeedServiceImpl implements SeedService {
   public void unlockSeed(Long seedId) {
     Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
     seed.unlockSeed();
+
+    Long memberId = seed.getMemberId();
+    Member member = memberRepository.findMemberByIdOrThrow(memberId);
+    member.useSsuck();
   }
 
   @Override
