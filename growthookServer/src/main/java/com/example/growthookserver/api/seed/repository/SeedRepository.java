@@ -12,7 +12,7 @@ public interface SeedRepository extends JpaRepository<Seed, Long> {
   Optional<Seed> findSeedById(Long seedId);
   List<Seed> findByCaveIdOrderByIdDesc(Long caveId);
 
-  List<Seed> findAllByOrderByIdDesc();
+  List<Seed> findByMemberIdOrderByIdDesc(Long memberId);
 
   default Seed findSeedByIdOrThrow(Long seedId) {
     return findSeedById(seedId)

@@ -72,11 +72,19 @@ public class SeedController {
     return ApiResponse.success(SuccessStatus.GET_SEED_LIST_BY_CAVE, seedService.getSeedListByCave(caveId));
   }
 
-  @GetMapping("seed/list")
+  @GetMapping("member/{memberId}/seed/list")
   @ResponseStatus(HttpStatus.OK)
   @Operation(summary = "SeedListGet", description = "전체 씨앗 리스트를 조회하는 API입니다.")
-  public ApiResponse<List<SeedListGetResponseDto>> getSeedList() {
-    return ApiResponse.success(SuccessStatus.GET_SEED_LIST, seedService.getSeedList());
+  public ApiResponse<List<SeedListGetResponseDto>> getSeedList(@PathVariable Long memberId) {
+    return ApiResponse.success(SuccessStatus.GET_SEED_LIST, seedService.getSeedList(memberId));
+  }
+
+  @PatchMapping("seed/{seedId}/scrap/status")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "ToggleSeedScrapStatus", description = "씨앗 스크랩 여부를 전환하는 토글 API입니다.")
+  public ApiResponse toggleSeedScrapStatus(@PathVariable Long seedId) {
+    seedService.toggleSeedScrapStatus(seedId);
+    return ApiResponse.success(SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getStatusCode(), SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getMessage());
   }
 
   @GetMapping("member/{memberId}/alarm")
@@ -85,4 +93,5 @@ public class SeedController {
   public ApiResponse<SeedAlarmGetResponseDto> getSeedAlarm(@PathVariable Long memberId) {
     return ApiResponse.success(SuccessStatus.GET_SEED_ALARM, seedService.getSeedAlarm(memberId));
   }
+
 }
