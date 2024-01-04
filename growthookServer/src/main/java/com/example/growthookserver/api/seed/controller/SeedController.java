@@ -5,7 +5,7 @@ import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
-import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.service.SeedService;
 import com.example.growthookserver.common.response.ApiResponse;
@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,8 +67,16 @@ public class SeedController {
   @GetMapping("/cave/{caveId}/seed/list")
   @ResponseStatus(HttpStatus.OK)
   @Operation(summary = "SeedListByCaveGet", description = "보관함별 씨앗 리스트를 조회하는 API입니다.")
-  public ApiResponse<List<SeedListByCaveGetResponseDto>> getSeedListByCave(@PathVariable Long caveId) {
+  public ApiResponse<List<SeedListGetResponseDto>> getSeedListByCave(@PathVariable Long caveId) {
     return ApiResponse.success(SuccessStatus.GET_SEED_LIST_BY_CAVE, seedService.getSeedListByCave(caveId));
   }
+
+  @GetMapping("seed/list")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedListGet", description = "전체 씨앗 리스트를 조회하는 API입니다.")
+  public ApiResponse<List<SeedListGetResponseDto>> getSeedList() {
+    return ApiResponse.success(SuccessStatus.GET_SEED_LIST, seedService.getSeedList());
+  }
+
 
 }

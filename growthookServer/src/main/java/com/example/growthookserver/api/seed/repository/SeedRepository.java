@@ -12,6 +12,8 @@ public interface SeedRepository extends JpaRepository<Seed, Long> {
   Optional<Seed> findSeedById(Long seedId);
   List<Seed> findByCaveIdOrderByIdDesc(Long caveId);
 
+  List<Seed> findAllByOrderByIdDesc();
+
   default Seed findSeedByIdOrThrow(Long seedId) {
     return findSeedById(seedId)
         .orElseThrow(()-> new NotFoundException(ErrorStatus.NOT_FOUND_SEED.getMessage()));
