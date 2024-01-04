@@ -1,5 +1,7 @@
 package com.example.growthookserver.api.seed.service.Impl;
 
+import com.example.growthookserver.api.actionplan.domain.ActionPlan;
+import com.example.growthookserver.api.actionplan.repository.ActionPlanRepository;
 import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.api.cave.repository.CaveRepository;
 import com.example.growthookserver.api.seed.domain.Seed;
@@ -8,9 +10,12 @@ import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +30,7 @@ public class SeedServiceImpl implements SeedService {
 
   private final CaveRepository caveRepository;
   private final SeedRepository seedRepository;
+  private final ActionPlanRepository actionPlanRepository;
 
   @Override
   @Transactional
@@ -61,8 +67,7 @@ public class SeedServiceImpl implements SeedService {
   public SeedDetailGetResponseDto getSeedDetail(Long seedId) {
     Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
     LocalDate lockDate = seed.getLockDate();
-    LocalDate currentDate = LocalDate.now();
-    long remainingDays = currentDate.until(lockDate, ChronoUnit.DAYS);
+    Long remainingDays = calculateRemainingDays(lockDate);
     return SeedDetailGetResponseDto.of(seed.getCave().getName(), seed.getInsight(), seed.getMemo(), seed.getSource(),
             seed.getUrl(), seed.getIsScraped(), lockDate.toString(), remainingDays);
   }
@@ -76,4 +81,21 @@ public class SeedServiceImpl implements SeedService {
     return SeedMoveResponseDto.of(seed.getCave().getId(), seed.getCave().getName());
   }
 
+  @Override
+  public List<SeedListByCaveGetResponseDto> getSeedListByCave(Long caveId) {
+    return seedRepository.findAllByCaveId(caveId).stream()
+        .map(seed -> SeedListByCaveGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
+            seed.getIsLocked(), seed.getIsScraped(), checkHasActionPlan(seed)))
+        .collect(Collectors.toList());
+  }
+
+  private Long calculateRemainingDays(LocalDate lockDate) {
+    LocalDate currentDate = LocalDate.now();
+    return currentDate.until(lockDate, ChronoUnit.DAYS);
+  }
+
+  private boolean checkHasActionPlan(Seed seed) {
+    List<ActionPlan> actionPlansBySeedId = actionPlanRepository.findAllBySeedId(seed.getId());
+    return !actionPlansBySeedId.isEmpty();
+  }
 }

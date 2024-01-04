@@ -3,6 +3,7 @@ package com.example.growthookserver.common.response;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -33,6 +34,7 @@ public enum SuccessStatus {
     PATCH_SEED_SUCCESS(HttpStatus.OK, "씨앗 수정 성공"),
     GET_SEED_DETAIL(HttpStatus.OK, "씨앗 상세 정보 조회 성공"),
     MOVE_SEED_SUCCESS(HttpStatus.OK, "씨앗 이동 성공"),
+    GET_SEED_LIST_BY_CAVE(HttpStatus.OK, "보관함별로 씨앗 리스트 조회 성공"),
 
     /**
      * actionplan

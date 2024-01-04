@@ -7,7 +7,9 @@ import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
+import java.util.List;
 
 public interface SeedService {
   //* 씨앗 생성
@@ -24,4 +26,7 @@ public interface SeedService {
 
   //* 씨앗 이동
   SeedMoveResponseDto moveSeed(Long seedId, SeedMoveRequestDto seedMoveRequestDto);
+
+  //* 보관함별 씨앗 리스트 조회
+  List<SeedListByCaveGetResponseDto> getSeedListByCave(Long caveId);
 }
