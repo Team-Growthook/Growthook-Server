@@ -31,6 +31,8 @@ public class Seed extends BaseTimeEntity {
 
     private String url;
 
+    private Long memberId;
+
     @Column(name = "lock_date")
     private LocalDate lockDate;
 
@@ -48,7 +50,7 @@ public class Seed extends BaseTimeEntity {
     private List<ActionPlan> actionPlans = new ArrayList<>();
 
     @Builder
-    public Seed(String insight, String memo, String source, String url, Integer goalMonth, Cave cave) {
+    public Seed(String insight, String memo, String source, String url, Integer goalMonth, Cave cave, Long memberId) {
         this.insight = insight;
         this.memo = memo;
         this.source = source;
@@ -57,6 +59,7 @@ public class Seed extends BaseTimeEntity {
         this.isScraped = false;
         this.isLocked = false;
         this.cave = cave;
+        this.memberId = memberId;
     }
 
     public void updateSeed(String newInsight, String newMemo, String newSource, String newUrl) {

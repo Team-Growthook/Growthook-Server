@@ -26,7 +26,7 @@ public class SeedController {
 
   private final SeedService seedService;
 
-  @PostMapping("/cave/{caveId}/seed")
+  @PostMapping("/member/{memberId}/cave/{caveId}/seed")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "SeedPost", description = "씨앗 생성 API입니다.")
   public ApiResponse<SeedCreateResponseDto> createSeed(@PathVariable("caveId") Long caveId, @Valid @RequestBody SeedCreateRequestDto seedCreateRequestDto) {
@@ -71,11 +71,11 @@ public class SeedController {
     return ApiResponse.success(SuccessStatus.GET_SEED_LIST_BY_CAVE, seedService.getSeedListByCave(caveId));
   }
 
-  @GetMapping("seed/list")
+  @GetMapping("member/{memberId}/seed/list")
   @ResponseStatus(HttpStatus.OK)
   @Operation(summary = "SeedListGet", description = "전체 씨앗 리스트를 조회하는 API입니다.")
-  public ApiResponse<List<SeedListGetResponseDto>> getSeedList() {
-    return ApiResponse.success(SuccessStatus.GET_SEED_LIST, seedService.getSeedList());
+  public ApiResponse<List<SeedListGetResponseDto>> getSeedList(@PathVariable Long memberId) {
+    return ApiResponse.success(SuccessStatus.GET_SEED_LIST, seedService.getSeedList(memberId));
   }
 
   @PatchMapping("seed/{seedId}/scrap/status")

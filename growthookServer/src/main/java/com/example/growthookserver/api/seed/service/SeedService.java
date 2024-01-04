@@ -29,7 +29,7 @@ public interface SeedService {
   List<SeedListGetResponseDto> getSeedListByCave(Long caveId);
 
   //* 씨앗 전체 리스트 조회
-  List<SeedListGetResponseDto> getSeedList();
+  List<SeedListGetResponseDto> getSeedList(Long memberId);
 
   //* 씨앗 스크랩 상태 변경
   void toggleSeedScrapStatus(Long seedId);

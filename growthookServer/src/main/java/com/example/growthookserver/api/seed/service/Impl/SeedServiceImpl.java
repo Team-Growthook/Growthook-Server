@@ -43,6 +43,7 @@ public class SeedServiceImpl implements SeedService {
         .insight(seedCreateRequestDto.getInsight())
         .source(seedCreateRequestDto.getSource())
         .goalMonth(seedCreateRequestDto.getGoalMonth())
+        .memberId(cave.getMember().getId())
         .build();
     Seed savedSeed = seedRepository.save(seed);
     return SeedCreateResponseDto.of(savedSeed.getId());
@@ -90,8 +91,8 @@ public class SeedServiceImpl implements SeedService {
   }
 
   @Override
-  public List<SeedListGetResponseDto> getSeedList() {
-    return seedRepository.findAllByOrderByIdDesc().stream()
+  public List<SeedListGetResponseDto> getSeedList(Long memberId) {
+    return seedRepository.findByMemberIdOrderByIdDesc(memberId).stream()
         .map(seed -> SeedListGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
             seed.getIsLocked(), seed.getIsScraped(), checkHasActionPlan(seed)))
         .collect(Collectors.toList());
