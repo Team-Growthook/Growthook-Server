@@ -8,7 +8,9 @@ import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
+import java.util.List;
 
 import java.time.LocalDate;
 
@@ -28,6 +30,10 @@ public interface SeedService {
   //* 씨앗 이동
   SeedMoveResponseDto moveSeed(Long seedId, SeedMoveRequestDto seedMoveRequestDto);
 
+  //* 보관함별 씨앗 리스트 조회
+  List<SeedListByCaveGetResponseDto> getSeedListByCave(Long caveId);
+
   //* 씨앗 알림 조회
   SeedAlarmGetResponseDto getSeedAlarm(Long memberId);
+
 }
