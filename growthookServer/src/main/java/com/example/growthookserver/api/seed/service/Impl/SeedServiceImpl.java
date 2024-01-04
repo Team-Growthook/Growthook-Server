@@ -6,17 +6,21 @@ import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
+import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -76,4 +80,32 @@ public class SeedServiceImpl implements SeedService {
     return SeedMoveResponseDto.of(seed.getCave().getId(), seed.getCave().getName());
   }
 
+  @Override
+  public SeedAlarmGetResponseDto getSeedAlarm(Long memberId) {
+    LocalDate now = LocalDate.now();
+    LocalDate threeDaysLater = now.plusDays(3);
+
+    List<Seed> seeds = seedRepository.findByCave_MemberIdAndLockDateBetween(memberId, now, threeDaysLater);
+
+    if(seeds.isEmpty()) {
+      return SeedAlarmGetResponseDto.of(0,0);
+    }
+
+    int seedCount = seeds.size();
+
+    Seed earliestSeed = findEarliestSeed(seeds);
+    int daysRemaining = calculateDaysRemaining(now, earliestSeed.getLockDate());
+
+    return SeedAlarmGetResponseDto.of(seedCount, daysRemaining);
+  }
+
+  private Seed findEarliestSeed(List<Seed> seeds) {
+    return seeds.stream()
+            .min(Comparator.comparing(Seed::getLockDate))
+            .orElse(null);
+  }
+
+  private int calculateDaysRemaining(LocalDate now, LocalDate localDate) {
+    return (int) ChronoUnit.DAYS.between(now, localDate);
+  }
 }
