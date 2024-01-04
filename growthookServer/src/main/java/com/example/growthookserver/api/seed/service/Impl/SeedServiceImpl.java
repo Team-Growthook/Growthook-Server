@@ -120,6 +120,13 @@ public class SeedServiceImpl implements SeedService {
 
   @Override
   @Transactional
+  public void unlockSeed(Long seedId) {
+    Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
+    seed.unlockSeed();
+  }
+
+  @Override
+  @Transactional
   public void toggleSeedScrapStatus(Long seedId) {
     Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
     seed.toggleScrapStatus();

@@ -74,4 +74,6 @@ public class Seed extends BaseTimeEntity {
     }
 
     public void toggleScrapStatus() { this.isScraped = !this.isScraped; }
+
+    public void unlockSeed() { this.isLocked = false; }
 }

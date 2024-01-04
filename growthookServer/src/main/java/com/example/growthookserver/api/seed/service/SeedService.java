@@ -40,4 +40,6 @@ public interface SeedService {
   //* 씨앗 알림 조회
   SeedAlarmGetResponseDto getSeedAlarm(Long memberId);
 
+  //* 씨앗 잠금 해제
+  void unlockSeed(Long seedId);
 }
