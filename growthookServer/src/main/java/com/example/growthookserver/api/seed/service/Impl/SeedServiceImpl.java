@@ -88,24 +88,11 @@ public class SeedServiceImpl implements SeedService {
     List<Seed> seeds = seedRepository.findByCave_MemberIdAndLockDateBetween(memberId, now, threeDaysLater);
 
     if(seeds.isEmpty()) {
-      return SeedAlarmGetResponseDto.of(0,0);
+      return SeedAlarmGetResponseDto.of(0);
     }
 
     int seedCount = seeds.size();
 
-    Seed earliestSeed = findEarliestSeed(seeds);
-    int daysRemaining = calculateDaysRemaining(now, earliestSeed.getLockDate());
-
-    return SeedAlarmGetResponseDto.of(seedCount, daysRemaining);
-  }
-
-  private Seed findEarliestSeed(List<Seed> seeds) {
-    return seeds.stream()
-            .min(Comparator.comparing(Seed::getLockDate))
-            .orElse(null);
-  }
-
-  private int calculateDaysRemaining(LocalDate now, LocalDate localDate) {
-    return (int) ChronoUnit.DAYS.between(now, localDate);
+    return SeedAlarmGetResponseDto.of(seedCount);
   }
 }

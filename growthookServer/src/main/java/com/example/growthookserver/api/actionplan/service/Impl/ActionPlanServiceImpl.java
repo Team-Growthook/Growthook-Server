@@ -8,8 +8,11 @@ import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGe
 import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.repository.ActionPlanRepository;
 import com.example.growthookserver.api.actionplan.service.ActionPlanService;
+import com.example.growthookserver.api.member.domain.Member;
 import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
+import com.example.growthookserver.common.exception.BadRequestException;
+import com.example.growthookserver.common.response.ErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,13 +37,9 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
         List<String> contents = actionPlanCreateRequestDto.getContents();
 
-        for(String content : contents) {
-            ActionPlan actionPlan = ActionPlan.builder()
-                    .content(content)
-                    .seed(seed)
-                    .build();
-            actionPlanRepository.save(actionPlan);
-        }
+        contents.stream()
+                .map(content -> ActionPlan.builder().content(content).seed(seed).build())
+                .forEach(actionPlanRepository::save);
     }
 
     @Override
@@ -70,7 +69,13 @@ public class ActionPlanServiceImpl implements ActionPlanService {
     @Transactional
     public void completeActionPlan(Long actionPlanId) {
         ActionPlan existinActionPlan = actionPlanRepository.findActionPlanByIdOrThrow(actionPlanId);
+        if(existinActionPlan.getIsFinished()) {
+            throw new BadRequestException(ErrorStatus.ALREADY_COMPLETE_ACTIONPLAN.getMessage());
+        }
         existinActionPlan.completeActionPlan(true);
+
+        Member member = existinActionPlan.getSeed().getCave().getMember();
+        member.incrementGatheredSsuk();
     }
 
     @Override

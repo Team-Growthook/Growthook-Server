@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(staticName = "of")
 public class SeedAlarmGetResponseDto {
     private int seedCount;
-    private int daysRemaining;
 }
