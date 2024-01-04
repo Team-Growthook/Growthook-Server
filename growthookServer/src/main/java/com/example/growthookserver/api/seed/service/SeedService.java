@@ -1,14 +1,12 @@
 package com.example.growthookserver.api.seed.service;
 
-import com.example.growthookserver.api.cave.dto.request.CaveCreateRequestDto;
-import com.example.growthookserver.api.cave.dto.response.CaveCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
-import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import java.util.List;
 
@@ -31,7 +29,10 @@ public interface SeedService {
   SeedMoveResponseDto moveSeed(Long seedId, SeedMoveRequestDto seedMoveRequestDto);
 
   //* 보관함별 씨앗 리스트 조회
-  List<SeedListByCaveGetResponseDto> getSeedListByCave(Long caveId);
+  List<SeedListGetResponseDto> getSeedListByCave(Long caveId);
+
+  //* 씨앗 전체 리스트 조회
+  List<SeedListGetResponseDto> getSeedList();
 
   //* 씨앗 알림 조회
   SeedAlarmGetResponseDto getSeedAlarm(Long memberId);

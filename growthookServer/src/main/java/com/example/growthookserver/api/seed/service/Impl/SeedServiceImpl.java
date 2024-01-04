@@ -11,7 +11,7 @@ import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
 import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
-import com.example.growthookserver.api.seed.dto.response.SeedListByCaveGetResponseDto;
+import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
@@ -86,9 +86,17 @@ public class SeedServiceImpl implements SeedService {
   }
 
   @Override
-  public List<SeedListByCaveGetResponseDto> getSeedListByCave(Long caveId) {
+  public List<SeedListGetResponseDto> getSeedListByCave(Long caveId) {
     return seedRepository.findByCaveIdOrderByIdDesc(caveId).stream()
-        .map(seed -> SeedListByCaveGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
+        .map(seed -> SeedListGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
+            seed.getIsLocked(), seed.getIsScraped(), checkHasActionPlan(seed)))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<SeedListGetResponseDto> getSeedList() {
+    return seedRepository.findAllByOrderByIdDesc().stream()
+        .map(seed -> SeedListGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
             seed.getIsLocked(), seed.getIsScraped(), checkHasActionPlan(seed)))
         .collect(Collectors.toList());
   }

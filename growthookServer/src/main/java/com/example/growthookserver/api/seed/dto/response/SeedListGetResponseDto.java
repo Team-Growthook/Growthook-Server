@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(staticName = "of")
-public class SeedListByCaveGetResponseDto {
+public class SeedListGetResponseDto {
   private Long seedId;
   private String insight;
   private Long remainingDays;
