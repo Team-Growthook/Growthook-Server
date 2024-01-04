@@ -26,7 +26,7 @@ public class SeedController {
 
   private final SeedService seedService;
 
-  @PostMapping("/member/{memberId}/cave/{caveId}/seed")
+  @PostMapping("/cave/{caveId}/seed")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "SeedPost", description = "씨앗 생성 API입니다.")
   public ApiResponse<SeedCreateResponseDto> createSeed(@PathVariable("caveId") Long caveId, @Valid @RequestBody SeedCreateRequestDto seedCreateRequestDto) {
