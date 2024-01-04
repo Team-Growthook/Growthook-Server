@@ -78,5 +78,12 @@ public class SeedController {
     return ApiResponse.success(SuccessStatus.GET_SEED_LIST, seedService.getSeedList());
   }
 
+  @PatchMapping("seed/{seedId}/scrap/status")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "ToggleSeedScrapStatus", description = "씨앗 스크랩 여부를 전환하는 토글 API입니다.")
+  public ApiResponse toggleSeedScrapStatus(@PathVariable Long seedId) {
+    seedService.toggleSeedScrapStatus(seedId);
+    return ApiResponse.success(SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getStatusCode(), SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getMessage());
+  }
 
 }

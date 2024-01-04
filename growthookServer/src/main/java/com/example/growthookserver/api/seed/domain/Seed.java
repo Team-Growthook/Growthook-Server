@@ -69,4 +69,6 @@ public class Seed extends BaseTimeEntity {
     public void changeCave(Cave newCave) {
         this.cave = newCave;
     }
+
+    public void toggleScrapStatus() { this.isScraped = !this.isScraped; }
 }

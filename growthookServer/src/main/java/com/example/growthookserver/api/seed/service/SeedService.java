@@ -30,4 +30,7 @@ public interface SeedService {
 
   //* 씨앗 전체 리스트 조회
   List<SeedListGetResponseDto> getSeedList();
+
+  //* 씨앗 스크랩 상태 변경
+  void toggleSeedScrapStatus(Long seedId);
 }

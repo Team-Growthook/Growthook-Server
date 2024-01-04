@@ -97,6 +97,13 @@ public class SeedServiceImpl implements SeedService {
         .collect(Collectors.toList());
   }
 
+  @Override
+  @Transactional
+  public void toggleSeedScrapStatus(Long seedId) {
+    Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
+    seed.toggleScrapStatus();
+  }
+
   private Long calculateRemainingDays(LocalDate lockDate) {
     LocalDate currentDate = LocalDate.now();
     return currentDate.until(lockDate, ChronoUnit.DAYS);
