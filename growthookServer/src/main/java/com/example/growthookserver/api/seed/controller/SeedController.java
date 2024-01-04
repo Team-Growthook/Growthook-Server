@@ -3,6 +3,7 @@ package com.example.growthookserver.api.seed.controller;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
+import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
@@ -84,6 +85,13 @@ public class SeedController {
   public ApiResponse toggleSeedScrapStatus(@PathVariable Long seedId) {
     seedService.toggleSeedScrapStatus(seedId);
     return ApiResponse.success(SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getStatusCode(), SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getMessage());
+  }
+
+  @GetMapping("member/{memberId}/alarm")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "SeedAlarm", description = "기한이 3일 이내로 남은 씨앗에 대한 알림을 조회하는 API입니다.")
+  public ApiResponse<SeedAlarmGetResponseDto> getSeedAlarm(@PathVariable Long memberId) {
+    return ApiResponse.success(SuccessStatus.GET_SEED_ALARM, seedService.getSeedAlarm(memberId));
   }
 
 }

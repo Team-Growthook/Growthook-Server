@@ -3,11 +3,14 @@ package com.example.growthookserver.api.seed.service;
 import com.example.growthookserver.api.seed.dto.request.SeedCreateRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedMoveRequestDto;
 import com.example.growthookserver.api.seed.dto.request.SeedUpdateRequestDto;
+import com.example.growthookserver.api.seed.dto.response.SeedAlarmGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedCreateResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedDetailGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import java.util.List;
+
+import java.time.LocalDate;
 
 public interface SeedService {
   //* 씨앗 생성
@@ -33,4 +36,8 @@ public interface SeedService {
 
   //* 씨앗 스크랩 상태 변경
   void toggleSeedScrapStatus(Long seedId);
+
+  //* 씨앗 알림 조회
+  SeedAlarmGetResponseDto getSeedAlarm(Long memberId);
+
 }

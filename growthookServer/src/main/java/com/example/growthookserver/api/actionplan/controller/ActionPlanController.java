@@ -2,7 +2,6 @@ package com.example.growthookserver.api.actionplan.controller;
 
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanCreateRequestDto;
 import com.example.growthookserver.api.actionplan.dto.request.ActionPlanUpdateRequestDto;
-import com.example.growthookserver.api.actionplan.dto.response.ActionPlanCreateResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.ActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.DoingActionPlanGetResponseDto;
 import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPlanGetResponseDto;
@@ -27,8 +26,9 @@ public class ActionPlanController {
     @PostMapping("seed/{seedId}/actionPlan")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "ActionPlanPost",description = "액션 플랜 생성 API입니다.")
-    public ApiResponse<ActionPlanCreateResponseDto> createActionPlan(@PathVariable("seedId")Long seedId, @Valid @RequestBody ActionPlanCreateRequestDto actionPlanCreateRequestDto) {
-        return ApiResponse.success(SuccessStatus.POST_ACTIONPLAN_SUCCESS, actionPlanService.createActionPlan(seedId, actionPlanCreateRequestDto));
+    public ApiResponse createActionPlan(@PathVariable("seedId")Long seedId, @Valid @RequestBody ActionPlanCreateRequestDto actionPlanCreateRequestDto) {
+        actionPlanService.createActionPlan(seedId, actionPlanCreateRequestDto);
+        return ApiResponse.success(SuccessStatus.POST_ACTIONPLAN_SUCCESS.getStatusCode(), SuccessStatus.POST_ACTIONPLAN_SUCCESS.getMessage());
     }
 
     @GetMapping("seed/{seedId}/actionPlan")
