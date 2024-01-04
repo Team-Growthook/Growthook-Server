@@ -83,7 +83,7 @@ public class SeedServiceImpl implements SeedService {
 
   @Override
   public List<SeedListByCaveGetResponseDto> getSeedListByCave(Long caveId) {
-    return seedRepository.findAllByCaveId(caveId).stream()
+    return seedRepository.findByCaveIdOrderByIdDesc(caveId).stream()
         .map(seed -> SeedListByCaveGetResponseDto.of(seed.getId(), seed.getInsight(), calculateRemainingDays(seed.getLockDate()),
             seed.getIsLocked(), seed.getIsScraped(), checkHasActionPlan(seed)))
         .collect(Collectors.toList());

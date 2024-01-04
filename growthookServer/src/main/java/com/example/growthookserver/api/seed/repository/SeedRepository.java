@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SeedRepository extends JpaRepository<Seed, Long> {
   Optional<Seed> findSeedById(Long seedId);
-  List<Seed> findAllByCaveId(Long caveId);
+  List<Seed> findByCaveIdOrderByIdDesc(Long caveId);
 
   default Seed findSeedByIdOrThrow(Long seedId) {
     return findSeedById(seedId)
