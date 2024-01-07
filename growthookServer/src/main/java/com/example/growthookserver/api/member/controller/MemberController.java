@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +28,13 @@ public class MemberController {
   @Operation(summary = "MemberProfileGet", description = "멤버 프로필을 조회하는 API입니다.")
   public ApiResponse<MemberDetailGetResponseDto> getMemberProfile(@PathVariable("memberId") Long memberId) {
     return ApiResponse.success(SuccessStatus.GET_MEMBER_PROFILE, memberService.getMemberProfile(memberId));
+  }
+
+  @DeleteMapping("/member/{memberId}")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "MemberWithdraw", description = "회원 탈퇴를 하는 API입니다.")
+  public ApiResponse deleteMember(@PathVariable("memberId") Long memberId) {
+    memberService.deleteMember(memberId);
+    return ApiResponse.success(SuccessStatus.DELETE_MEMBER.getStatusCode(), SuccessStatus.DELETE_MEMBER.getMessage());
   }
 }
