@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.member.controller;
 
 import com.example.growthookserver.api.member.dto.response.MemberDetailGetResponseDto;
+import com.example.growthookserver.api.member.dto.response.MemberUsedSsukGetResponseDto;
 import com.example.growthookserver.api.member.service.MemberService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
@@ -36,5 +37,12 @@ public class MemberController {
   public ApiResponse deleteMember(@PathVariable("memberId") Long memberId) {
     memberService.deleteMember(memberId);
     return ApiResponse.success(SuccessStatus.DELETE_MEMBER.getStatusCode(), SuccessStatus.DELETE_MEMBER.getMessage());
+  }
+
+  @GetMapping("/member/{memberId}/used-ssuk")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "MemberUsedSsukGet", description = "사용한 쑥의 개수를 조회하는 API입니다.")
+  public ApiResponse<MemberUsedSsukGetResponseDto> getUsedSsuk(@PathVariable("memberId") Long memberId) {
+    return ApiResponse.success(SuccessStatus.GET_MEMBER_USED_SSUK, memberService.getUsedSsuk(memberId));
   }
 }
