@@ -55,6 +55,7 @@ public enum SuccessStatus {
      * review
      */
     POST_REVIEW_SUCCESS(HttpStatus.CREATED, "리뷰 생성 성공"),
+    GET_REVIEW_DETAIL(HttpStatus.OK, "리뷰 내용 상세 조회 성공"),
     ;
 
     private final HttpStatus httpStatus;
