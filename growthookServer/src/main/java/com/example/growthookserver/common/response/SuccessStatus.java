@@ -50,6 +50,11 @@ public enum SuccessStatus {
     GET_FINISHED_ACTIONPLAN_PERCENT(HttpStatus.OK, "완료한 액션 플랜 퍼센트 조회 성공"),
     GET_DOING_ACTIONPLAN_SUCCESS(HttpStatus.OK, "진행 중인 액션 플랜 리스트 조회 성공"),
     GET_FINISHED_ACTIONPLAN_SUCCESS(HttpStatus.OK,"완료한 액션 플랜 리스트 조회 성공"),
+
+    /**
+     * review
+     */
+    POST_REVIEW_SUCCESS(HttpStatus.CREATED, "리뷰 생성 성공"),
     ;
 
     private final HttpStatus httpStatus;
