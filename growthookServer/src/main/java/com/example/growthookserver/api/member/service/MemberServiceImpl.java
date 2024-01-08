@@ -19,4 +19,11 @@ public class MemberServiceImpl implements MemberService{
     Member member = memberRepository.findMemberByIdOrThrow(memberId);
     return MemberDetailGetResponseDto.of(member.getNickname(), member.getEmail());
   }
+
+  @Override
+  @Transactional
+  public void deleteMember(Long memberId) {
+    Member member = memberRepository.findMemberByIdOrThrow(memberId);
+    memberRepository.delete(member);
+  }
 }
