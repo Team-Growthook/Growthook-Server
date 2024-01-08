@@ -34,6 +34,7 @@ public enum ErrorStatus {
     NOT_FOUND_CAVE("해당하는 동굴이 없습니다."),
     NOT_FOUND_SEED("해당하는 씨앗이 없습니다."),
     NOT_FOUND_ACTIONPLAN("해당하는 액션 플랜이 없습니다."),
+    NOT_FOUND_REVIEW("해당하는 액션플랜에 작성된 리뷰가 없습니다."),
 
     /**
      * 500 SERVER_ERROR
