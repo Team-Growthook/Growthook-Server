@@ -36,7 +36,7 @@ public class ReviewController {
 
   @GetMapping("actionplan/{actionPlanId}/review")
   @ResponseStatus(HttpStatus.OK)
-  @Operation(summary = "ReveiwGet", description = "리뷰 상세 조회 API입니다.")
+  @Operation(summary = "ReviewGet", description = "리뷰 상세 조회 API입니다.")
   public ApiResponse<ReviewDetailGetResponseDto> getReviewDetail(@PathVariable("actionPlanId") Long actionPlanId) {
     return ApiResponse.success(SuccessStatus.GET_REVIEW_DETAIL, reviewService.getReviewDetail(actionPlanId));
   }
