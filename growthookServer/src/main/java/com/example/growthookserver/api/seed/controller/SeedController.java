@@ -94,4 +94,12 @@ public class SeedController {
     return ApiResponse.success(SuccessStatus.GET_SEED_ALARM, seedService.getSeedAlarm(memberId));
   }
 
+  @PatchMapping("seed/{seedId}/lock/status")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "unlockSeed", description = "인사이트 잠금을 해제하는 API입니다.")
+  public ApiResponse unlockSeed(@PathVariable Long seedId) {
+    seedService.unlockSeed(seedId);
+    return ApiResponse.success(SuccessStatus.UNLOCK_SEED.getStatusCode(), SuccessStatus.UNLOCK_SEED.getMessage());
+  }
+
 }

@@ -56,4 +56,9 @@ public class Member extends BaseTimeEntity {
     public void incrementGatheredSsuk() {
         this.gatheredSsuk = (this.gatheredSsuk == null ? 0 : this.gatheredSsuk) + 1;
     }
+
+    public void useSsuck() {
+        this.gatheredSsuk--;
+        this.usedSsuk++;
+    }
 }
