@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.member.controller;
 
 import com.example.growthookserver.api.member.dto.response.MemberDetailGetResponseDto;
+import com.example.growthookserver.api.member.dto.response.MemberGatheredSsukGetResponseDto;
 import com.example.growthookserver.api.member.dto.response.MemberUsedSsukGetResponseDto;
 import com.example.growthookserver.api.member.service.MemberService;
 import com.example.growthookserver.common.response.ApiResponse;
@@ -44,5 +45,12 @@ public class MemberController {
   @Operation(summary = "MemberUsedSsukGet", description = "사용한 쑥의 개수를 조회하는 API입니다.")
   public ApiResponse<MemberUsedSsukGetResponseDto> getUsedSsuk(@PathVariable("memberId") Long memberId) {
     return ApiResponse.success(SuccessStatus.GET_MEMBER_USED_SSUK, memberService.getUsedSsuk(memberId));
+  }
+
+  @GetMapping("/member/{memberId}/gathered-ssuk")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "MemberGatheredSsukGet", description = "수확한 쑥의 개수를 조회하는 API입니다.")
+  public ApiResponse<MemberGatheredSsukGetResponseDto> getGatheredSsuk(@PathVariable("memberId") Long memberId) {
+    return ApiResponse.success(SuccessStatus.GET_MEMBER_GATHERED_SSUK, memberService.getGatheredSsuk(memberId));
   }
 }

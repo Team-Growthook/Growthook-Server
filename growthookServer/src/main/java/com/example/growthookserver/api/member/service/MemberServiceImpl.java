@@ -2,6 +2,7 @@ package com.example.growthookserver.api.member.service;
 
 import com.example.growthookserver.api.member.domain.Member;
 import com.example.growthookserver.api.member.dto.response.MemberDetailGetResponseDto;
+import com.example.growthookserver.api.member.dto.response.MemberGatheredSsukGetResponseDto;
 import com.example.growthookserver.api.member.dto.response.MemberUsedSsukGetResponseDto;
 import com.example.growthookserver.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,11 @@ public class MemberServiceImpl implements MemberService{
   public MemberUsedSsukGetResponseDto getUsedSsuk(Long memberId) {
     Member member = memberRepository.findMemberByIdOrThrow(memberId);
     return MemberUsedSsukGetResponseDto.of(member.getUsedSsuk());
+  }
+
+  @Override
+  public MemberGatheredSsukGetResponseDto getGatheredSsuk(Long memberId) {
+    Member member = memberRepository.findMemberByIdOrThrow(memberId);
+    return MemberGatheredSsukGetResponseDto.of(member.getGatheredSsuk());
   }
 }

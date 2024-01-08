@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.member.service;
 
 import com.example.growthookserver.api.member.dto.response.MemberDetailGetResponseDto;
+import com.example.growthookserver.api.member.dto.response.MemberGatheredSsukGetResponseDto;
 import com.example.growthookserver.api.member.dto.response.MemberUsedSsukGetResponseDto;
 
 public interface MemberService {
@@ -12,4 +13,7 @@ public interface MemberService {
 
   //* 사용한 쑥의 개수 조회
   MemberUsedSsukGetResponseDto getUsedSsuk(Long memberId);
+
+  //* 수확한 쑥의 개수 조회
+  MemberGatheredSsukGetResponseDto getGatheredSsuk(Long memberId);
 }

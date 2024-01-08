@@ -63,6 +63,7 @@ public enum SuccessStatus {
     GET_MEMBER_PROFILE(HttpStatus.OK, "회원 프로필 정보 조회 성공"),
     DELETE_MEMBER(HttpStatus.OK, "회원 탈퇴 성공"),
     GET_MEMBER_USED_SSUK(HttpStatus.OK, "사용한 쑥의 개수 조회 성공"),
+    GET_MEMBER_GATHERED_SSUK(HttpStatus.OK, "수확한 쑥의 개수 조회 성공"),
     ;
 
     private final HttpStatus httpStatus;
