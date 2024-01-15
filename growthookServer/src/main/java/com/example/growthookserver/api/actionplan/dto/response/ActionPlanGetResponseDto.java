@@ -17,4 +17,6 @@ public class ActionPlanGetResponseDto {
     private Boolean isScraped;
 
     private Boolean isFinished;
+
+    private Boolean isReviewed;
 }

@@ -1,5 +1,6 @@
 package com.example.growthookserver.api.review.repository;
 
+import com.example.growthookserver.api.actionplan.domain.ActionPlan;
 import com.example.growthookserver.api.cave.domain.Cave;
 import com.example.growthookserver.api.review.domain.Review;
 import com.example.growthookserver.common.exception.NotFoundException;
@@ -15,5 +16,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     return findReviewByActionPlanId(actionPlanId)
         .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_REVIEW.getMessage()));
   }
+  boolean existsByActionPlan(ActionPlan actionPlan);
 
 }

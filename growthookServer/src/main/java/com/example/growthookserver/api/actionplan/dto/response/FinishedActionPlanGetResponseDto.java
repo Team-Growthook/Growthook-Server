@@ -16,4 +16,6 @@ public class FinishedActionPlanGetResponseDto {
     private Boolean isScraped;
 
     private Long seedId;
+
+    private Boolean isReviewed;
 }
