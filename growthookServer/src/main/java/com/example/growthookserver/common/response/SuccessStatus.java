@@ -50,6 +50,7 @@ public enum SuccessStatus {
     GET_FINISHED_ACTIONPLAN_PERCENT(HttpStatus.OK, "완료한 액션 플랜 퍼센트 조회 성공"),
     GET_DOING_ACTIONPLAN_SUCCESS(HttpStatus.OK, "진행 중인 액션 플랜 리스트 조회 성공"),
     GET_FINISHED_ACTIONPLAN_SUCCESS(HttpStatus.OK,"완료한 액션 플랜 리스트 조회 성공"),
+    TOGGLE_ACTIONPLAN_SCRAP(HttpStatus.OK, "액션 플랜 스크랩 여부 토글 전환 성공"),
 
     /**
      * review

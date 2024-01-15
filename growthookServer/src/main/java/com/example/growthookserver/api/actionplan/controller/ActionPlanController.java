@@ -82,4 +82,12 @@ public class ActionPlanController {
     public ApiResponse<FinishedActionPlanGetResponseDto> getFinishedActionPlan(@PathVariable Long memberId) {
         return ApiResponse.success(SuccessStatus.GET_FINISHED_ACTIONPLAN_SUCCESS, actionPlanService.getFinishedActionPlan(memberId));
     }
+
+    @PatchMapping("actionplan/{actionplanId}/scrap")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "ScrapedActionPlan", description = "액션 플랜을 스크랩 하는 API입니다.")
+    public ApiResponse toggleActionPlanScrapStatus(@PathVariable Long actionplanId) {
+        actionPlanService.toggleActionPlanScrapStatus(actionplanId);
+        return ApiResponse.success(SuccessStatus.TOGGLE_ACTIONPLAN_SCRAP.getStatusCode(), SuccessStatus.TOGGLE_SEED_SCRAP_STATUS.getMessage());
+    }
 }
