@@ -110,4 +110,11 @@ public class ActionPlanServiceImpl implements ActionPlanService {
                 .map(actionPlan -> FinishedActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public void toggleActionPlanScrapStatus(Long actionpalnId) {
+        ActionPlan actionPlan = actionPlanRepository.findActionPlanByIdOrThrow(actionpalnId);
+        actionPlan.toggleScrapStatus();
+    }
 }

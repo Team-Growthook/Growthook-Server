@@ -52,4 +52,8 @@ public class ActionPlan extends BaseTimeEntity {
     public void completeActionPlan(Boolean newIsFinished) {
         this.isFinished = newIsFinished;
     }
+
+    public void toggleScrapStatus() {
+        this.isScraped = !this.isScraped;
+    }
 }
