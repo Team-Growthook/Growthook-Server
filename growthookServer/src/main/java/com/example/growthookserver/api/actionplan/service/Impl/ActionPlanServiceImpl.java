@@ -9,6 +9,7 @@ import com.example.growthookserver.api.actionplan.dto.response.FinishedActionPla
 import com.example.growthookserver.api.actionplan.repository.ActionPlanRepository;
 import com.example.growthookserver.api.actionplan.service.ActionPlanService;
 import com.example.growthookserver.api.member.domain.Member;
+import com.example.growthookserver.api.review.repository.ReviewRepository;
 import com.example.growthookserver.api.seed.domain.Seed;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.common.exception.BadRequestException;
@@ -29,6 +30,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     private final ActionPlanRepository actionPlanRepository;
     private final SeedRepository seedRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     @Transactional
@@ -47,7 +49,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         List<ActionPlan> actionPlans = actionPlanRepository.findAllBySeedId(seedId);
 
         return actionPlans.stream()
-                .map(actionPlan -> ActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(), actionPlan.getIsFinished()))
+                .map(actionPlan -> ActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(), actionPlan.getIsFinished(),reviewRepository.existsByActionPlan(actionPlan)))
                 .collect(Collectors.toList());
     }
 
@@ -98,7 +100,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         List<ActionPlan> doingActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinished(memberId,false);
 
         return doingActionPlans.stream()
-                .map(actionPlan -> DoingActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId()))
+                .map(actionPlan -> DoingActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId(),reviewRepository.existsByActionPlan(actionPlan)))
                 .collect(Collectors.toList());
     }
 
@@ -107,7 +109,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
         List<ActionPlan> finishedActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinished(memberId,true);
 
         return finishedActionPlans.stream()
-                .map(actionPlan -> FinishedActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId()))
+                .map(actionPlan -> FinishedActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId(),reviewRepository.existsByActionPlan(actionPlan)))
                 .collect(Collectors.toList());
     }
 }
