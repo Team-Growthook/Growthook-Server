@@ -12,6 +12,7 @@ import com.example.growthookserver.api.member.domain.Member;
 import com.example.growthookserver.api.member.repository.MemberRepository;
 import com.example.growthookserver.common.exception.NotFoundException;
 import com.example.growthookserver.common.response.ErrorStatus;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,19 +26,24 @@ import java.util.stream.Collectors;
 public class CaveServiceImpl implements CaveService {
     private final MemberRepository memberRepository;
     private final CaveRepository caveRepository;
+    private static final int CAVE_IMAGE_TOTAL_COUNT = 4;
 
     @Override
     @Transactional
     public CaveCreateResponseDto createCave(Long memberId, CaveCreateRequestDto caveCreateRequestDto){
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
+        int imageIndex = calculateImageIndex(memberId);
+
         Cave cave = Cave.builder()
-                .name(caveCreateRequestDto.getName())
-                .introduction(caveCreateRequestDto.getIntroduction())
-                .isShared(caveCreateRequestDto.getIsShared())
-                .member(member)
-                .build();
+            .name(caveCreateRequestDto.getName())
+            .introduction(caveCreateRequestDto.getIntroduction())
+            .isShared(caveCreateRequestDto.getIsShared())
+            .member(member)
+            .imageIndex(imageIndex)
+            .build();
+
         Cave savedCave = caveRepository.save(cave);
-        return CaveCreateResponseDto.of(savedCave.getId());
+        return CaveCreateResponseDto.of(savedCave.getId(), savedCave.getImageIndex());
     }
 
     @Override
@@ -45,7 +51,7 @@ public class CaveServiceImpl implements CaveService {
         List<Cave> caves = caveRepository.findAllByMemberId(memberId);
 
         return caves.stream()
-                .map(cave -> CaveAllResponseDto.of(cave.getId(), cave.getName()))
+                .map(cave -> CaveAllResponseDto.of(cave.getId(), cave.getName(), cave.getImageIndex()))
                 .collect(Collectors.toList());
     }
 
@@ -69,6 +75,12 @@ public class CaveServiceImpl implements CaveService {
     public void deleteCave(Long caveId) {
         Cave cave = caveRepository.findCaveByIdOrThrow(caveId);
         caveRepository.delete(cave);
+    }
+
+    private int calculateImageIndex(Long memberId) {
+        return caveRepository.findTopByMemberIdOrderByIdDesc(memberId)
+            .map(recentlyCreatedCave -> (recentlyCreatedCave.getImageIndex() + 1) % CAVE_IMAGE_TOTAL_COUNT)
+            .orElse(0);
     }
 
 }

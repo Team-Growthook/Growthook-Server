@@ -26,6 +26,9 @@ public class Cave extends BaseTimeEntity {
 
     private String introduction;
 
+    @Column(name = "image_index")
+    private Integer imageIndex;
+
     @Column(name = "is_shared")
     private Boolean isShared;
 
@@ -37,11 +40,12 @@ public class Cave extends BaseTimeEntity {
     private List<Seed> seeds = new ArrayList<>();
 
     @Builder
-    public Cave(String name, String introduction, Boolean isShared, Member member) {
+    public Cave(String name, String introduction, Boolean isShared, Member member, Integer imageIndex) {
         this.name = name;
         this.introduction = introduction;
         this.isShared = isShared;
         this.member = member;
+        this.imageIndex = imageIndex;
     }
 
     public void updateCave(String newName, String newIntroduction, Boolean newIsShared) {

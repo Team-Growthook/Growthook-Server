@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class CaveAllResponseDto {
     private Long caveId;
     private String caveName;
+    private Integer caveImageIndex;
 }
