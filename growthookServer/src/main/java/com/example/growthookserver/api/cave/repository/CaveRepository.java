@@ -13,6 +13,8 @@ public interface CaveRepository extends JpaRepository<Cave, Long> {
 
     Optional<Cave> findCaveById(Long caveId);
 
+    Optional<Cave> findTopByMemberIdOrderByIdDesc(Long memberId);
+
     default Cave findCaveByIdOrThrow(Long caveId) {
         return findCaveById(caveId)
             .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_CAVE.getMessage()));

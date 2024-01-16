@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(staticName = "of")
 public class CaveCreateResponseDto {
     private Long caveId;
+    private Integer caveImageIndex;
 }
