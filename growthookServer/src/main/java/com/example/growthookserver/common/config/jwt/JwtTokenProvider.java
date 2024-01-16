@@ -29,7 +29,11 @@ public class JwtTokenProvider {
   @Value("${jwt.access-token.expire-length}")
   private Long accessTokenExpireLength;
 
+  @Value("${jwt.refresh-token.expire-length}")
+  private Long refreshTokenExpireLength;
+
   private static final String AUTHORIZATION_HEADER = "Authorization";
+  private static final String REFRESH_AUTHORIZATION_HEADER = "Refresh";
 
   public String generateAccessToken(Authentication authentication) {
     Date now = new Date();
@@ -48,6 +52,17 @@ public class JwtTokenProvider {
         .compact();
   }
 
+  public String generateRefreshToken() {
+    Date now = new Date();
+    Date expiration = new Date(now.getTime() + refreshTokenExpireLength);
+
+    return Jwts.builder()
+        .setIssuedAt(now)
+        .setExpiration(expiration)
+        .signWith(getSignKey(), SignatureAlgorithm.HS256)
+        .compact();
+  }
+
   public Integer getAccessTokenPayload(String token) {
     return Integer.parseInt(
         Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token)
@@ -57,6 +72,16 @@ public class JwtTokenProvider {
   public String resolveToken(HttpServletRequest request) {
 
     String header = request.getHeader(AUTHORIZATION_HEADER);
+
+    if (header == null || !header.startsWith("Bearer ")) {
+      return null;
+    } else {
+      return header.split(" ")[1];
+    }
+  }
+
+  public String resolveRefreshToken(HttpServletRequest request) {
+    String header = request.getHeader(REFRESH_AUTHORIZATION_HEADER);
 
     if (header == null || !header.startsWith("Bearer ")) {
       return null;

@@ -27,9 +27,6 @@ public class Member extends BaseTimeEntity {
     @Column(name = "social_platform")
     private SocialPlatform socialPlatform;
 
-    @Column(name = "is_new_member")
-    private Boolean isNewMember;
-
     @Column(name = "used_ssuk")
     private Integer usedSsuk;
 
@@ -43,16 +40,15 @@ public class Member extends BaseTimeEntity {
     private String refreshToken;
 
     @Builder
-    public Member(String nickname, String email, SocialPlatform socialPlatform, Boolean isNewMember, Integer usedSsuk, Integer gatheredSsuk) {
+    public Member(String nickname, String email, SocialPlatform socialPlatform, String socialId) {
         this.nickname = nickname;
         this.email = email;
         this.socialPlatform = socialPlatform;
-        this.isNewMember = isNewMember;
-        this.usedSsuk = usedSsuk;
-        this.gatheredSsuk = gatheredSsuk;
+        this.socialId = socialId;
+        this.usedSsuk = 0;
+        this.gatheredSsuk = 0;
     }
 
-    @Builder
     public void incrementGatheredSsuk() {
         this.gatheredSsuk = (this.gatheredSsuk == null ? 0 : this.gatheredSsuk) + 1;
     }
@@ -60,5 +56,9 @@ public class Member extends BaseTimeEntity {
     public void useSsuck() {
         this.gatheredSsuk--;
         this.usedSsuk++;
+    }
+
+    public void updateRefreshToken (String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
