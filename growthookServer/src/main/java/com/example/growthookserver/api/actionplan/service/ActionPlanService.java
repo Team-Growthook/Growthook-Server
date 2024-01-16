@@ -32,4 +32,6 @@ public interface ActionPlanService {
 
     //* 완료한 액션 플랜 목록 조회
     List<FinishedActionPlanGetResponseDto> getFinishedActionPlan(Long memberId);
+
+    void toggleActionPlanScrapStatus(Long actionpalnId);
 }
