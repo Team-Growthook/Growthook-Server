@@ -1,18 +1,27 @@
 package com.example.growthookserver.common.config;
 
+import com.example.growthookserver.common.config.jwt.JwtAuthenticationEntryPoint;
+import com.example.growthookserver.common.config.jwt.JwtAuthenticationFilter;
+import com.example.growthookserver.common.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private static final String[] SWAGGER_URL = {
             "/swagger-resources/**",
@@ -28,19 +37,20 @@ public class SecurityConfig {
     @Bean
     @Profile("dev")
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        // XorCsrfTokenRequestAttributeHandler requestHandler = new XorCsrfTokenRequestAttributeHandler();
-//        http
-//                .csrf((csrf) -> csrf
-//                        .csrfTokenRequestHandler(requestHandler)
-//                )
-//                .authorizeRequests()
-//                .anyRequest().permitAll();
-        http
-                .csrf().disable()
-                .httpBasic().disable()
-                .authorizeHttpRequests()
-                .anyRequest().permitAll();
-
+        http.csrf((csrfConfig) -> csrfConfig.disable())
+            .cors(Customizer.withDefaults())
+            .sessionManagement(
+                (sessionManagement) -> sessionManagement.sessionCreationPolicy(
+                    SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(
+                authorize -> authorize
+                    .requestMatchers(SWAGGER_URL).permitAll()
+                    .anyRequest().authenticated())
+            .addFilterBefore(
+                new JwtAuthenticationFilter(this.jwtTokenProvider, this.jwtAuthenticationEntryPoint),
+                UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint(this.jwtAuthenticationEntryPoint));
         return http.build();
     }
 }
