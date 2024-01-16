@@ -17,10 +17,12 @@ import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
+import java.time.Clock;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +40,7 @@ public class SeedServiceImpl implements SeedService {
   private final SeedRepository seedRepository;
   private final ActionPlanRepository actionPlanRepository;
   private final MemberRepository memberRepository;
+  private final Clock clock;
 
   @Override
   @Transactional
@@ -147,5 +150,11 @@ public class SeedServiceImpl implements SeedService {
   private boolean checkHasActionPlan(Seed seed) {
     List<ActionPlan> actionPlansBySeedId = actionPlanRepository.findAllBySeedId(seed.getId());
     return !actionPlansBySeedId.isEmpty();
+  }
+
+  @Scheduled(cron = "${schedules.cron.reward.publish}", zone = "Asia/Seoul")
+  public void updateLockStatusForExpiredSeeds() {
+    int updatedCount = seedRepository.updateLockStatusForExpiredSeeds();
+    System.out.println("Updated " + updatedCount + " seeds.");
   }
 }

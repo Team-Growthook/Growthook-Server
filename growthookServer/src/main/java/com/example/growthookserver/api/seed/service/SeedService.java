@@ -42,4 +42,6 @@ public interface SeedService {
 
   //* 씨앗 잠금 해제
   void unlockSeed(Long seedId);
+
+  void updateLockStatusForExpiredSeeds();
 }
