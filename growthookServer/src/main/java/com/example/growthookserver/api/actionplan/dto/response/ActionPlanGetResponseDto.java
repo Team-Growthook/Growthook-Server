@@ -18,5 +18,5 @@ public class ActionPlanGetResponseDto {
 
     private Boolean isFinished;
 
-    private Boolean isReviewed;
+    private Boolean hasReview;
 }
