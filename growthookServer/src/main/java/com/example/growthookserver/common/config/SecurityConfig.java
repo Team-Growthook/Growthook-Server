@@ -3,6 +3,7 @@ package com.example.growthookserver.common.config;
 import com.example.growthookserver.common.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.growthookserver.common.config.jwt.JwtAuthenticationFilter;
 import com.example.growthookserver.common.config.jwt.JwtTokenProvider;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
@@ -34,6 +38,13 @@ public class SecurityConfig {
             "/swagger-ui/swagger-ui.css",
     };
 
+    private static final String[] AUTH_WHITELIST = {
+        "/api/v1/auth",
+        "/health",
+        "/profile",
+        "/actuator/**"
+    };
+
     @Bean
     @Profile("dev")
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -45,6 +56,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                 authorize -> authorize
                     .requestMatchers(SWAGGER_URL).permitAll()
+                    .requestMatchers(AUTH_WHITELIST).permitAll()
                     .anyRequest().authenticated())
             .addFilterBefore(
                 new JwtAuthenticationFilter(this.jwtTokenProvider, this.jwtAuthenticationEntryPoint),

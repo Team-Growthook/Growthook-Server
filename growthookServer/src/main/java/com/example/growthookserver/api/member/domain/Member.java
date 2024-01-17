@@ -23,6 +23,9 @@ public class Member extends BaseTimeEntity {
     @Column
     private String email;
 
+    @Column
+    private String profileImage;
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "social_platform")
     private SocialPlatform socialPlatform;
@@ -40,11 +43,12 @@ public class Member extends BaseTimeEntity {
     private String refreshToken;
 
     @Builder
-    public Member(String nickname, String email, SocialPlatform socialPlatform, String socialId) {
+    public Member(String nickname, String email, SocialPlatform socialPlatform, String socialId, String profileImage) {
         this.nickname = nickname;
         this.email = email;
         this.socialPlatform = socialPlatform;
         this.socialId = socialId;
+        this.profileImage = profileImage;
         this.usedSsuk = 0;
         this.gatheredSsuk = 0;
     }
