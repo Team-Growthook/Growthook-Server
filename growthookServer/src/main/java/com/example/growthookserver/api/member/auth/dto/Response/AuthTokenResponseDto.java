@@ -6,12 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class AuthTokenResponseDto {
     private String accessToken;
 
     private String refreshToken;
-    public static AuthTokenResponseDto of (String accessToken, String refreshToken) {
-        return new AuthTokenResponseDto(accessToken, refreshToken);
-    }
 }
