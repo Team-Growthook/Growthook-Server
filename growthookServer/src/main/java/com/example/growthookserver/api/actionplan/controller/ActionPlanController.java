@@ -9,6 +9,7 @@ import com.example.growthookserver.api.actionplan.service.ActionPlanService;
 import com.example.growthookserver.common.response.ApiResponse;
 import com.example.growthookserver.common.response.SuccessStatus;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1")
+@SecurityRequirement(name = "JWT Authentication")
 @Tag(name = "AciontPlan - 액션플랜 관련 API",description = "AcitonPlan APi Documnet")
 public class ActionPlanController {
 
