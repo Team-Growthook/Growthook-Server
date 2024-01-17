@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
 
             String refreshToken = jwtTokenProvider.generateRefreshToken();
 
-            Boolean isExistUser = isMemberBySocialId(socialData.getId());
+            Boolean isExistUser = memberRepository.existsBySocialId(socialData.getId());
 
             // 신규 유저 저장
             if (!isExistUser.booleanValue()) {
@@ -61,10 +61,10 @@ public class AuthServiceImpl implements AuthService {
 
                 member.updateRefreshToken(refreshToken);
             }
-            else findMemberBySocialId(socialData.getId()).updateRefreshToken(refreshToken);
+            else memberRepository.findMemberBySocialIdOrThrow(socialData.getId()).updateRefreshToken(refreshToken);
 
             // socialId를 통해서 등록된 유저 찾기
-            Member signedMember = findMemberBySocialId(socialData.getId());
+            Member signedMember = memberRepository.findMemberBySocialIdOrThrow(socialData.getId());
 
             Authentication authentication = new UserAuthentication(signedMember.getId(), null, null);
 
@@ -81,15 +81,6 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public AuthTokenResponseDto getNewToken(String accessToken, String refreshToken) {
         return AuthTokenResponseDto.of(accessToken,refreshToken);
-    }
-
-    private Member findMemberBySocialId(String socialId) {
-        return memberRepository.findBySocialId(socialId)
-                .orElseThrow(() -> new BadRequestException(ErrorStatus.INVALID_MEMBER.getMessage()));
-    }
-
-    private boolean isMemberBySocialId(String socialId) {
-        return memberRepository.existsBySocialId(socialId);
     }
 
     private SocialInfoDto getSocialData(SocialPlatform socialPlatform, String socialAccessToken) throws NoSuchAlgorithmException, InvalidKeySpecException {

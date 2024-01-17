@@ -1,6 +1,7 @@
 package com.example.growthookserver.api.member.repository;
 
 import com.example.growthookserver.api.member.domain.Member;
+import com.example.growthookserver.common.exception.BadRequestException;
 import com.example.growthookserver.common.exception.NotFoundException;
 import com.example.growthookserver.common.response.ErrorStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     default Member findMemberByIdOrThrow(Long memberId){
         return findMemberById(memberId)
             .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_MEMBER.getMessage()));
+    }
+
+    default Member findMemberBySocialIdOrThrow(String socialId) {
+        return findBySocialId(socialId)
+            .orElseThrow(() -> new BadRequestException(ErrorStatus.INVALID_MEMBER.getMessage()));
     }
 }
