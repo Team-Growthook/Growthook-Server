@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class AuthRequestDto {
     private String socialPlatform;
     private String socialToken;
+    private String userName;
 }

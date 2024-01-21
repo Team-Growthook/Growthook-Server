@@ -25,6 +25,7 @@ public enum ErrorStatus {
     KAKAO_UNAUTHORIZED_USER("카카오 로그인 실패. 만료되었거나 잘못된 카카오 토큰입니다."),
     SIGNIN_REQUIRED("access, refreshToken 모두 만료되었습니다. 재로그인이 필요합니다."),
     VALID_ACCESS_TOKEN("아직 유효한 accessToken 입니다."),
+    FAILED_TO_VALIDATE_APPLE_LOGIN("애플 로그인 실패"),
 
     /**
      * 404 NOT_FOUND
@@ -40,7 +41,8 @@ public enum ErrorStatus {
      * 500 SERVER_ERROR
      */
     INTERNAL_SERVER_ERROR("예상치 못한 서버 에러가 발생했습니다."),
-    BAD_GATEWAY_EXCEPTION("일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!");
+    BAD_GATEWAY_EXCEPTION("일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
+    ;
 
     private final String message;
 

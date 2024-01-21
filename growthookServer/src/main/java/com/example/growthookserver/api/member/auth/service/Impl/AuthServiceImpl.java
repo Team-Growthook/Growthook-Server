@@ -6,6 +6,7 @@ import com.example.growthookserver.api.member.auth.dto.Response.AuthResponseDto;
 import com.example.growthookserver.api.member.auth.dto.Response.AuthTokenResponseDto;
 
 import com.example.growthookserver.api.member.auth.dto.SocialInfoDto;
+import com.example.growthookserver.api.member.auth.service.AppleAuthService;
 import com.example.growthookserver.api.member.auth.service.AuthService;
 import com.example.growthookserver.api.member.auth.service.KakaoAuthService;
 
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthServiceImpl implements AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final KakaoAuthService kakaoAuthService;
+    private final AppleAuthService appleAuthService;
     private final MemberRepository memberRepository;
 
     @Override
@@ -41,7 +43,8 @@ public class AuthServiceImpl implements AuthService {
         try {
             SocialPlatform socialPlatform = SocialPlatform.valueOf(authRequestDto.getSocialPlatform());
 
-            SocialInfoDto socialData = getSocialData(socialPlatform, authRequestDto.getSocialToken());
+            SocialInfoDto socialData = getSocialData(socialPlatform, authRequestDto.getSocialToken(),
+                authRequestDto.getUserName());
 
             String refreshToken = jwtTokenProvider.generateRefreshToken();
 
@@ -83,11 +86,13 @@ public class AuthServiceImpl implements AuthService {
         return AuthTokenResponseDto.of(accessToken,refreshToken);
     }
 
-    private SocialInfoDto getSocialData(SocialPlatform socialPlatform, String socialAccessToken) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private SocialInfoDto getSocialData(SocialPlatform socialPlatform, String socialAccessToken, String userName) {
 
         switch (socialPlatform) {
             case KAKAO:
                 return kakaoAuthService.login(socialAccessToken);
+            case APPLE:
+                return appleAuthService.login(socialAccessToken, userName);
             default:
                 throw new IllegalArgumentException(ErrorStatus.ANOTHER_ACCESS_TOKEN.getMessage());
         }
