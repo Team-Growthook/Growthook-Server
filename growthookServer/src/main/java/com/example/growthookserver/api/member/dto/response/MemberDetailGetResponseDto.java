@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class MemberDetailGetResponseDto {
   private String nickname;
   private String email;
+  private String profileImage;
 }
