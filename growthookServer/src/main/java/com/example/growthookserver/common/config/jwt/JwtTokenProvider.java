@@ -1,5 +1,7 @@
 package com.example.growthookserver.common.config.jwt;
 
+import com.example.growthookserver.api.member.domain.Member;
+import com.example.growthookserver.api.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
@@ -23,6 +25,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
+  private final MemberRepository memberRepository;
+
   @Value("${jwt.secret}")
   private String secretKey;
 
@@ -33,9 +37,9 @@ public class JwtTokenProvider {
   private Long refreshTokenExpireLength;
 
   private static final String AUTHORIZATION_HEADER = "Authorization";
-  private static final String REFRESH_AUTHORIZATION_HEADER = "Refresh";
+  private static final String REFRESH_AUTHORIZATION_HEADER = "refreshToken";
 
-  public String generateAccessToken(Authentication authentication) {
+  public String generateAccessToken(Long memberId) {
     Date now = new Date();
     Date expiration = new Date(now.getTime() + accessTokenExpireLength);
 
@@ -43,7 +47,7 @@ public class JwtTokenProvider {
         .setIssuedAt(now)
         .setExpiration(expiration);
 
-    claims.put("id", authentication.getPrincipal());
+    claims.put("id", memberId);
 
     return Jwts.builder()
         .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -63,10 +67,9 @@ public class JwtTokenProvider {
         .compact();
   }
 
-  public Integer getAccessTokenPayload(String token) {
-    return Integer.parseInt(
-        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token)
-            .getBody().get("id").toString());
+  public Claims getAccessTokenPayload(String token) {
+    return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token)
+            .getBody();
   }
 
   public String resolveToken(HttpServletRequest request) {
@@ -116,5 +119,10 @@ public class JwtTokenProvider {
   private Key getSignKey() {
     byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
     return new SecretKeySpec(keyBytes, "HmacSHA256");
+  }
+
+  public Long validateMemberRefreshToken(String refreshToken) {
+    Member member = memberRepository.findByRefreshTokenOrThrow(refreshToken);
+    return member.getId();
   }
 }

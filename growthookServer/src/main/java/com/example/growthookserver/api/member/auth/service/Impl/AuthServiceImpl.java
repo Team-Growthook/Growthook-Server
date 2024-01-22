@@ -69,9 +69,7 @@ public class AuthServiceImpl implements AuthService {
             // socialId를 통해서 등록된 유저 찾기
             Member signedMember = memberRepository.findMemberBySocialIdOrThrow(socialData.getId());
 
-            Authentication authentication = new UserAuthentication(signedMember.getId(), null, null);
-
-            String accessToken = jwtTokenProvider.generateAccessToken(authentication);
+            String accessToken = jwtTokenProvider.generateAccessToken(signedMember.getId());
 
             return AuthResponseDto.of(signedMember.getNickname(), signedMember.getId(), accessToken, signedMember.getRefreshToken());
 
