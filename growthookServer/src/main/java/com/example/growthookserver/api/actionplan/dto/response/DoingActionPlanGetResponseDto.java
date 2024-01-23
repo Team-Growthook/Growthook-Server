@@ -17,5 +17,6 @@ public class DoingActionPlanGetResponseDto {
 
     private Long seedId;
 
-    private Boolean isReviewed;
+    private Boolean hasReview;
+
 }

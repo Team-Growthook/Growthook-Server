@@ -19,7 +19,8 @@ public class MemberServiceImpl implements MemberService{
   @Override
   public MemberDetailGetResponseDto getMemberProfile(Long memberId) {
     Member member = memberRepository.findMemberByIdOrThrow(memberId);
-    return MemberDetailGetResponseDto.of(member.getNickname(), member.getEmail());
+    return MemberDetailGetResponseDto.of(member.getNickname(), member.getEmail(),
+        member.getProfileImage());
   }
 
   @Override
