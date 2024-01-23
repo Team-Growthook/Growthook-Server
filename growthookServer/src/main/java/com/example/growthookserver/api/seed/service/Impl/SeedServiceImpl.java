@@ -151,10 +151,4 @@ public class SeedServiceImpl implements SeedService {
     List<ActionPlan> actionPlansBySeedId = actionPlanRepository.findAllBySeedId(seed.getId());
     return !actionPlansBySeedId.isEmpty();
   }
-
-  @Scheduled(cron = "${schedules.cron.reward.publish}", zone = "Asia/Seoul")
-  public void updateLockStatusForExpiredSeeds() {
-    int updatedCount = seedRepository.updateLockStatusForExpiredSeeds();
-    System.out.println("Updated " + updatedCount + " seeds.");
-  }
 }
