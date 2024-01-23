@@ -19,4 +19,5 @@ public class ActionPlanGetResponseDto {
     private Boolean isFinished;
 
     private Boolean hasReview;
+
 }

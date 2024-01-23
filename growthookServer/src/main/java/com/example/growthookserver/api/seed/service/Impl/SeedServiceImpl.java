@@ -17,17 +17,16 @@ import com.example.growthookserver.api.seed.dto.response.SeedListGetResponseDto;
 import com.example.growthookserver.api.seed.dto.response.SeedMoveResponseDto;
 import com.example.growthookserver.api.seed.repository.SeedRepository;
 import com.example.growthookserver.api.seed.service.SeedService;
+import java.time.Clock;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +37,7 @@ public class SeedServiceImpl implements SeedService {
   private final SeedRepository seedRepository;
   private final ActionPlanRepository actionPlanRepository;
   private final MemberRepository memberRepository;
+  private final Clock clock;
 
   @Override
   @Transactional
