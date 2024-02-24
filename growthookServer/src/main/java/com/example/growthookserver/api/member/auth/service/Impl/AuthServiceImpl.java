@@ -19,6 +19,7 @@ import com.example.growthookserver.common.response.ErrorStatus;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import com.example.growthookserver.external.slack.service.SlackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final KakaoAuthService kakaoAuthService;
     private final AppleAuthService appleAuthService;
     private final MemberRepository memberRepository;
+    private final SlackService slackService;
 
     @Override
     @Transactional
@@ -61,6 +63,9 @@ public class AuthServiceImpl implements AuthService {
                     .build();
 
                 memberRepository.save(member);
+
+                Long memberCount = memberRepository.count();
+                slackService.sendSlackMessage(socialData.getNickname(), memberCount, "#gth_signup");
 
                 member.updateRefreshToken(refreshToken);
             }
