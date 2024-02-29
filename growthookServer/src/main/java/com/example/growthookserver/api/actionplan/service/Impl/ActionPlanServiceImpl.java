@@ -46,7 +46,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     @Override
     public List<ActionPlanGetResponseDto> getActionPlan(Long seedId) {
-        List<ActionPlan> actionPlans = actionPlanRepository.findAllBySeedId(seedId);
+        List<ActionPlan> actionPlans = actionPlanRepository.findAllBySeedIdOrderByCreatedAtDesc(seedId);
 
         return actionPlans.stream()
                 .map(actionPlan -> ActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(), actionPlan.getIsFinished(),reviewRepository.existsByActionPlan(actionPlan)))
@@ -97,7 +97,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     @Override
     public List<DoingActionPlanGetResponseDto> getDoingActionPlan(Long memberId) {
-        List<ActionPlan> doingActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinished(memberId,false);
+        List<ActionPlan> doingActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinishedOrderByCreatedAtDesc(memberId,false);
 
         return doingActionPlans.stream()
                 .map(actionPlan -> DoingActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId(),reviewRepository.existsByActionPlan(actionPlan)))
@@ -106,7 +106,7 @@ public class ActionPlanServiceImpl implements ActionPlanService {
 
     @Override
     public List<FinishedActionPlanGetResponseDto> getFinishedActionPlan(Long memberId) {
-        List<ActionPlan> finishedActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinished(memberId,true);
+        List<ActionPlan> finishedActionPlans = actionPlanRepository.findAllBySeedCaveMemberIdAndIsFinishedOrderByCreatedAtDesc(memberId,true);
 
         return finishedActionPlans.stream()
                 .map(actionPlan -> FinishedActionPlanGetResponseDto.of(actionPlan.getId(), actionPlan.getContent(), actionPlan.getIsScraped(),actionPlan.getSeed().getId(),reviewRepository.existsByActionPlan(actionPlan)))
