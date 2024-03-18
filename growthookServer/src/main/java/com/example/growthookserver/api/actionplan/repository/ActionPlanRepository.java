@@ -14,12 +14,10 @@ public interface ActionPlanRepository extends JpaRepository<ActionPlan,Long> {
     List<ActionPlan> findAllBySeedCaveMemberIdAndIsFinishedOrderByCreatedAtDesc(Long memberId, Boolean isFinished);
 
     @Query("SELECT ap FROM ActionPlan ap JOIN ap.seed s JOIN s.cave c JOIN c.member m WHERE m.id = :memberId")
-    List<ActionPlan> findAllByMemberIdOrderByCreatedAtDesc(Long memberId);
+    List<ActionPlan> findAllByMemberId(Long memberId);
     List<ActionPlan> findAllBySeedIdOrderByCreatedAtDesc(Long seedId);
 
     List<ActionPlan> findAllBySeedId(Long seedId);
-
-    List<ActionPlan> findAllByMemberId(Long memberId);
 
     Optional<ActionPlan> findActionPlanById(Long actionPlanId);
 
