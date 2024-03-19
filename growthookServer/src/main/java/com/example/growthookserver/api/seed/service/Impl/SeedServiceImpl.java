@@ -20,6 +20,9 @@ import com.example.growthookserver.api.seed.service.SeedService;
 import java.time.Clock;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.example.growthookserver.common.exception.BadRequestException;
+import com.example.growthookserver.common.response.ErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,10 +128,12 @@ public class SeedServiceImpl implements SeedService {
   @Transactional
   public void unlockSeed(Long seedId) {
     Seed seed = seedRepository.findSeedByIdOrThrow(seedId);
-    seed.unlockSeed();
+    Member member = memberRepository.findMemberByIdOrThrow(seed.getMemberId());
 
-    Long memberId = seed.getMemberId();
-    Member member = memberRepository.findMemberByIdOrThrow(memberId);
+    if(member.getGatheredSsuk()==0)
+      throw new BadRequestException(ErrorStatus.USER_GATHEREDSSUK_ZERO.getMessage());
+
+    seed.unlockSeed();
     member.useSsuck();
   }
 
