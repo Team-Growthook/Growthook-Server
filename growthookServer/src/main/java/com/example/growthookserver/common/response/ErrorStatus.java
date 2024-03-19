@@ -17,6 +17,7 @@ public enum ErrorStatus {
     INVALID_MEMBER("유효하지 않은 유저입니다."),
     ANOTHER_ACCESS_TOKEN("지원하지 않는 소셜 플랫폼입니다."),
     ALREADY_COMPLETE_ACTIONPLAN("이미 완료된 액션 플랜입니다."),
+    USER_GATHEREDSSUK_ZERO("해당 유저의 쑥이 0개입니다."),
 
     /**
      * 401 UNAUTHORIZED

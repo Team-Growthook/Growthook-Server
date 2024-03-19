@@ -19,7 +19,6 @@ public class SeedCreateRequestDto {
   @Size(max = 300)
   private String memo;
 
-  @NotBlank
   @Size(max = 20)
   private String source;
 
