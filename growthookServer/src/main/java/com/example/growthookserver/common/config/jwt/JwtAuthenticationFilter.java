@@ -25,9 +25,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private static final String ISSUE_TOKEN_API_URL = "/api/v1/auth/token";
 
+  private static final String[] SWAGGER_URL = {
+          "/swagger-resources/**",
+          "/favicon.ico",
+          "/api-docs/**",
+          "/swagger-ui/**",
+          "/swagger-ui.html",
+          "/swagger-ui/index.html",
+          "/docs/swagger-ui/index.html",
+          "/swagger-ui/swagger-ui.css",
+  };
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain) throws ServletException, IOException {
+
+    String requestURI = request.getRequestURI();
+
+    // Swagger 관련 경로에 대해서는 필터를 적용하지 않음
+    if (isSwaggerUrl(requestURI)) {
+      chain.doFilter(request, response);
+      return;
+    }
+
     try {
       String accessToken = jwtTokenProvider.resolveToken(request);
       if (ISSUE_TOKEN_API_URL.equals(request.getRequestURI())) {
@@ -78,5 +98,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     Claims claims = jwtTokenProvider.getAccessTokenPayload(token);
     Authentication authentication = new UserAuthentication(Long.valueOf(String.valueOf(claims.get("id"))), null, null);
     SecurityContextHolder.getContext().setAuthentication(authentication);
+  }
+
+  private boolean isSwaggerUrl(String requestUri) {
+    for (String swaggerUrl : SWAGGER_URL) {
+      if (requestUri.matches(swaggerUrl.replace("**", ".*"))) {
+        return true;
+      }
+    }
+    return false;
   }
 }
