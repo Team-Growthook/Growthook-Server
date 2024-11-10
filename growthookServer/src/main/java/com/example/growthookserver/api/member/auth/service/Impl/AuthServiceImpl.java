@@ -44,44 +44,39 @@ public class AuthServiceImpl implements AuthService {
 
         try {
             SocialPlatform socialPlatform = SocialPlatform.valueOf(authRequestDto.getSocialPlatform());
-
-            SocialInfoDto socialData = getSocialData(socialPlatform, authRequestDto.getSocialToken(),
-                authRequestDto.getUserName());
-
+            SocialInfoDto socialData = getSocialData(socialPlatform, authRequestDto.getSocialToken(), authRequestDto.getUserName());
             String refreshToken = jwtTokenProvider.generateRefreshToken();
 
-            Boolean isExistUser = memberRepository.existsBySocialId(socialData.getId());
+            // 사용자 조회 또는 생성
+            Member member = memberRepository.findBySocialId(socialData.getId())
+                    .orElseGet(() -> {
+                        Member newMember = Member.builder()
+                                .nickname(socialData.getNickname())
+                                .email(socialData.getEmail())
+                                .socialPlatform(socialPlatform)
+                                .socialId(socialData.getId())
+                                .profileImage(socialData.getProfileImage())
+                                .build();
+                        memberRepository.save(newMember);
 
-            // 신규 유저 저장
-            if (!isExistUser.booleanValue()) {
-                Member member = Member.builder()
-                    .nickname(socialData.getNickname())
-                    .email(socialData.getEmail())
-                    .socialPlatform(socialPlatform)
-                    .socialId(socialData.getId())
-                    .profileImage(socialData.getProfileImage())
-                    .build();
+                        Long memberCount = memberRepository.count();
+                        slackService.sendSlackMessage(socialData.getNickname(), memberCount, "#gth_signup");
+                        return newMember;
+                    });
 
-                memberRepository.save(member);
+            // 리프레시 토큰 업데이트
+            member.updateRefreshToken(refreshToken);
 
-                Long memberCount = memberRepository.count();
-                slackService.sendSlackMessage(socialData.getNickname(), memberCount, "#gth_signup");
+            // 액세스 토큰 생성
+            String accessToken = jwtTokenProvider.generateAccessToken(member.getId());
 
-                member.updateRefreshToken(refreshToken);
-            }
-            else memberRepository.findMemberBySocialIdOrThrow(socialData.getId()).updateRefreshToken(refreshToken);
-
-            // socialId를 통해서 등록된 유저 찾기
-            Member signedMember = memberRepository.findMemberBySocialIdOrThrow(socialData.getId());
-
-            String accessToken = jwtTokenProvider.generateAccessToken(signedMember.getId());
-
-            return AuthResponseDto.of(signedMember.getNickname(), signedMember.getId(), accessToken, signedMember.getRefreshToken());
+            return AuthResponseDto.of(member.getNickname(), member.getId(), accessToken, member.getRefreshToken());
 
         } catch (IllegalArgumentException ex) {
             throw new IllegalArgumentException(ErrorStatus.ANOTHER_ACCESS_TOKEN.getMessage());
         }
     }
+
 
     @Override
     @Transactional
